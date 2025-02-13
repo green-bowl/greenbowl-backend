@@ -1,0 +1,20 @@
+version: '1.0'
+services:
+  postgres:
+    image: postgres:latest
+    networks:
+      - greenbowl_network
+    volumes:
+      - ./db/data:/var/lib/postgresql/data
+    env_file: .env
+    ports:
+      - "5432:5432"
+    environment:
+      - TZ=Asia/Seoul
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=postgresuser
+      - POSTGRES_DB=greenbowl
+
+networks:
+  greenbowl_network:
+    driver: bridge
