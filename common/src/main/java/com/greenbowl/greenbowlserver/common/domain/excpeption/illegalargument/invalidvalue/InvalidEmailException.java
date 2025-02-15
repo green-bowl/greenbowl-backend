@@ -1,4 +1,4 @@
-package com.greenbowl.greenbowlserver.common.excpeption.illegalargument.invalidvalue;
+package com.greenbowl.greenbowlserver.common.domain.excpeption.illegalargument.invalidvalue;
 
 public class InvalidEmailException extends InvalidValueException {
     public InvalidEmailException(String message) {

@@ -1,4 +1,4 @@
-package com.greenbowl.greenbowlserver.common.excpeption;
+package com.greenbowl.greenbowlserver.common.domain.excpeption;
 
 import lombok.Builder;
 import lombok.Getter;
