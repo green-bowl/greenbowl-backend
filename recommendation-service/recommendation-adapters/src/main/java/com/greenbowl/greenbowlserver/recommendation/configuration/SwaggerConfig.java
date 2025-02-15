@@ -12,8 +12,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.util.StringUtils;
+import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.ApiKey;
 import springfox.documentation.service.AuthorizationScope;
 import springfox.documentation.service.SecurityReference;
@@ -38,6 +40,7 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.basePackage("com.greenbowl.greenbowlserver.recommendation"))
                 .paths(PathSelectors.any())
                 .build()
+                .apiInfo(apiInfo())
                 .securityContexts(Arrays.asList(securityContext()))
                 .securitySchemes(Arrays.asList(apiKey()));
     }
@@ -56,6 +59,14 @@ public class SwaggerConfig {
 
     private ApiKey apiKey() {
         return new ApiKey("JWT", "Authorization", "header");
+    }
+
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("그린볼 AI 추천 서버 API")
+                .description("스마트 헬스 푸드 케어 서비스 그린볼의 AI 추천 서버 API입니다.")
+                .version("1.0")
+                .build();
     }
 
     @Bean
