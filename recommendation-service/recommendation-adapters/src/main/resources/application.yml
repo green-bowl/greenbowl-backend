@@ -29,4 +29,3 @@ spring:
       matching-strategy: ANT_PATH_MATCHER
 logging:
   config: classpath:logback-spring.xml
-
