@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @Getter
@@ -14,7 +14,7 @@ public class UpdateIngredientResponse {
     private Long id;
     private int quantity;
     private String storageMethod;
-    private LocalDateTime expirationDate;
+    private LocalDate expirationDate;
     private int sequence;
     private String categoryDetail;
 

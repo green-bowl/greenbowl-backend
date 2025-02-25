@@ -11,7 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Table(name = "ingredient")
 @Entity(name = "ingredient")
@@ -26,7 +26,7 @@ public class IngredientJpaEntity extends BaseGeneralEntity {
     private StorageMethod storageMethod;
 
     @Column(nullable = false)
-    private LocalDateTime expirationDate;
+    private LocalDate expirationDate;
 
     @ManyToOne
     @JoinColumn(name = "category_item_id", nullable = false)
@@ -37,7 +37,7 @@ public class IngredientJpaEntity extends BaseGeneralEntity {
     }
 
     @Builder
-    public IngredientJpaEntity(Quantity quantity, StorageMethod storageMethod, LocalDateTime expirationDate, CategoryItemJpaEntity categoryItemJpaEntity) {
+    public IngredientJpaEntity(Quantity quantity, StorageMethod storageMethod, LocalDate expirationDate, CategoryItemJpaEntity categoryItemJpaEntity) {
         this.quantity = quantity;
         this.storageMethod = storageMethod;
         this.expirationDate = expirationDate;
@@ -54,7 +54,7 @@ public class IngredientJpaEntity extends BaseGeneralEntity {
 
     public static IngredientJpaEntity from(Ingredient ingredient, CategoryItemJpaEntity categoryItemJpaEntity) {
         Quantity quantity = ingredient.getQuantity();
-        LocalDateTime expirationDate = ingredient.getExpirationDate();
+        LocalDate expirationDate = ingredient.getExpirationDate();
         StorageMethod storageMethod = ingredient.getStorageMethod();
 
         return IngredientJpaEntity.builder()

@@ -20,15 +20,15 @@ import javax.persistence.Table;
 @Getter
 public class CategoryItemJpaEntity extends BaseGeneralEntity {
 
-    @Column
+    @Column(nullable = false)
     private Long userId;
 
     @Convert(converter = CategoryDetail.CategoryDetailConverter.class)
-    @Column
+    @Column(nullable = false)
     private CategoryDetail categoryDetail;
 
     @Convert(converter = Category.CategoryConverter.class)
-    @Column
+    @Column(nullable = false)
     private Category category;
 
     @Builder

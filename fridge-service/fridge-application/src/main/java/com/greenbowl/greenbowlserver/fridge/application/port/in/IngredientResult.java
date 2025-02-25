@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @Builder
@@ -16,7 +16,7 @@ public class IngredientResult {
     private final Long id;
     private final int quantity;
     private final String storageMethod;
-    private final LocalDateTime expirationDate;
+    private final LocalDate expirationDate;
     private final Long categoryId;
     private final int sequence;
     private final String categoryDetail;

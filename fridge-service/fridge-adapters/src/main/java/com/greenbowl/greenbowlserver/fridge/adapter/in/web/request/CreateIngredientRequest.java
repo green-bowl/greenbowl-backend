@@ -5,7 +5,7 @@ import lombok.Getter;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import static com.greenbowl.greenbowlserver.fridge.adapter.in.web.ApiConstant.*;
 
@@ -23,5 +23,5 @@ public class CreateIngredientRequest {
     private String storageMethod;
     @NotNull
     @ApiModelProperty(value = INGREDIENT_EXPIRATION_DATE, example = INGREDIENT_EXPIRATION_DATE_EXAMPLE)
-    private LocalDateTime expirationDate;
+    private LocalDate expirationDate;
 }
