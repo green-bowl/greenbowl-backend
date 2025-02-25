@@ -7,9 +7,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum StorageMethod {
     // refrigerated, frozen, room_temperature
-    COLD("냉장"),
-    FROZEN("냉동"),
-    ROOM_TEMP("상온");
+    COLD("COLD"),
+    FROZEN("FROZEN"),
+    ROOM_TEMP("ROOM_TEMP");
 
     private final String description;
 
