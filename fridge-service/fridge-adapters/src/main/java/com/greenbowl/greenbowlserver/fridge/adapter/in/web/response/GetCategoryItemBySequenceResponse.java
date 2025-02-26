@@ -10,10 +10,12 @@ import lombok.Getter;
 @Getter
 @Builder
 public class GetCategoryItemBySequenceResponse {
-    String categoryDetail;
+    private Long categoryItemId;
+    private String categoryDetail;
 
     public static GetCategoryItemBySequenceResponse from (CategoryItem categoryItem) {
         return GetCategoryItemBySequenceResponse.builder()
+                .categoryItemId(categoryItem.getId())
                 .categoryDetail(WrapperAccessor.getCategoryDetail(categoryItem.getCategoryDetail()))
                 .build();
     }

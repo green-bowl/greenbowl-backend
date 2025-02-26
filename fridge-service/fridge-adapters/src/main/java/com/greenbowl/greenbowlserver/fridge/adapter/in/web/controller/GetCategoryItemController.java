@@ -24,6 +24,11 @@ public class GetCategoryItemController {
     private static final String GET_CATEGORY_ITEM_DESCRIPTION =
             "로그인 후 카테고리 리스트를 조회할 수 있습니다.";
 
+    private static final String GET_CATEGORY_ITEM_BY_SEQUENCE = "카테고리 종류별 리스트 조회";
+    private static final String GET_CATEGORY_ITEM_BY_SEQUENCE_DESCRIPTION =
+            "로그인 후 카테고리 종류별 리스트를 조회할 수 있습니다.";
+
+    @ApiOperation(value = GET_CATEGORY_ITEM_BY_SEQUENCE, notes = GET_CATEGORY_ITEM_BY_SEQUENCE_DESCRIPTION)
     @GetMapping("/category-items")
     public ResponseEntity<List<GetCategoryItemBySequenceResponse>> getCategoryItemsBySequence(@RequestParam("sequence") String sequence){
         String userId = "1";
