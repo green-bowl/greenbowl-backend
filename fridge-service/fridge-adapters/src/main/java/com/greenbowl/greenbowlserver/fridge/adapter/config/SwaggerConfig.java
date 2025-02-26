@@ -42,7 +42,8 @@ public class SwaggerConfig {
                 .build()
                 .apiInfo(apiInfo())
                 .securityContexts(Arrays.asList(securityContext()))
-                .securitySchemes(Arrays.asList(apiKey()));
+                .securitySchemes(Arrays.asList(apiKey()))
+                .pathMapping("/api/fridges");
     }
 
     private SecurityContext securityContext() {

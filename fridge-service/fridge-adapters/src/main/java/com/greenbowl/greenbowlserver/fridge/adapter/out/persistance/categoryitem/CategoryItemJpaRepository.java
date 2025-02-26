@@ -1,5 +1,6 @@
 package com.greenbowl.greenbowlserver.fridge.adapter.out.persistance.categoryitem;
 
+import com.greenbowl.greenbowlserver.fridge.domain.wrapper.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface CategoryItemJpaRepository extends JpaRepository<CategoryItemJpa
     CategoryItemJpaEntity findByUserIdAndIdAndDeleteYnFalse(Long userId, Long categoryId);
 
     Optional<CategoryItemJpaEntity> findByCategoryDetail(String categoryDetail);
+
+    List<CategoryItemJpaEntity> findAllByUserIdAndCategoryAndDeleteYnFalse(Long userId, Category category);
 }

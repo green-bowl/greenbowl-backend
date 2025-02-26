@@ -6,6 +6,7 @@ import com.greenbowl.greenbowlserver.fridge.application.port.out.CreateCategoryI
 import com.greenbowl.greenbowlserver.fridge.application.port.out.DeleteCategoryItemPort;
 import com.greenbowl.greenbowlserver.fridge.application.port.out.GetCategoryItemPort;
 import com.greenbowl.greenbowlserver.fridge.domain.CategoryItem;
+import com.greenbowl.greenbowlserver.fridge.domain.wrapper.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -45,6 +46,15 @@ public class CategoryItemPersistenceAdapter implements
         CategoryItemJpaEntity categoryItemJpaEntity = categoryItemJpaRepository.findById(categoryId)
                 .orElseThrow(() -> new IllegalArgumentException("카테고리를 찾을 수 없음: " + categoryId));
         return FridgeJpaEntityToDomainMapper.mapToDomainEntity(categoryItemJpaEntity);
+    }
+
+    @Override
+    public List<CategoryItem> getCategoryItemsByUserIdAndSequence(Long userId, Category category) {
+        List<CategoryItemJpaEntity> categoryItemJpaEntities
+                = categoryItemJpaRepository.findAllByUserIdAndCategoryAndDeleteYnFalse(userId, category);
+        return categoryItemJpaEntities.stream()
+                .map(FridgeJpaEntityToDomainMapper::mapToDomainEntity)
+                .collect(Collectors.toList());
     }
 
     @Override
