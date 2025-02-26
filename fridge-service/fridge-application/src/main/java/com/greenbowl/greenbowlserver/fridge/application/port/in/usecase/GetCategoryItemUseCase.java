@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface GetCategoryItemUseCase {
     List<CategoryItem> getCategoryItems(Long userId);
+    List<CategoryItem> getCategoryItemBySequence(Long userId, int sequence);
 }
