@@ -15,3 +15,6 @@ include 'fridge-service:fridge-application'
 findProject(':fridge-service:fridge-application')?.name = 'fridge-application'
 include 'fridge-service:fridge-domain'
 findProject(':fridge-service:fridge-domain')?.name = 'fridge-domain'
+
+include 'eureka-service'
+include 'eureka-service:eureka'
