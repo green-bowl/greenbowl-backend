@@ -8,6 +8,7 @@ import java.util.List;
 
 @Getter
 public class Recipe {
+    private Long id;
     private String name;
     private String imageUrl;
     private short cookingTime;
@@ -16,12 +17,16 @@ public class Recipe {
     private List<RecipeIngredient> recipeIngredients;
     private String introduction;
     private Nutrition nutrition;
+    private LocalDateTime createdAt;
+    private LocalDateTime modifiedAt;
 
     @Builder
     private Recipe(
-            String name, String imageUrl, short cookingTime, short calories, String oneLineIntroduction,
-            List<RecipeIngredient> recipeIngredients, String introduction, Nutrition nutrition
+            Long id, String name, String imageUrl, short cookingTime, short calories,
+            String oneLineIntroduction, List<RecipeIngredient> recipeIngredients, String introduction,
+            Nutrition nutrition, LocalDateTime createdAt, LocalDateTime modifiedAt
     ) {
+        this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
         this.cookingTime = cookingTime;
@@ -30,6 +35,8 @@ public class Recipe {
         this.recipeIngredients = recipeIngredients;
         this.introduction = introduction;
         this.nutrition = nutrition;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
     }
 
     public static Recipe of(String name, String imageUrl, short cookingTime, short calories) {
@@ -63,6 +70,7 @@ public class Recipe {
             LocalDateTime createdAt, LocalDateTime modifiedAt
     ) {
         return Recipe.builder()
+                .id(id)
                 .name(name)
                 .imageUrl(imageUrl)
                 .cookingTime(cookingTime)
@@ -71,6 +79,8 @@ public class Recipe {
                 .recipeIngredients(recipeIngredients)
                 .introduction(introduction)
                 .nutrition(nutrition)
+                .createdAt(createdAt)
+                .modifiedAt(modifiedAt)
                 .build();
     }
 }
