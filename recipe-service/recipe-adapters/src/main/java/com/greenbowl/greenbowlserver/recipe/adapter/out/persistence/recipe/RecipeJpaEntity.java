@@ -3,6 +3,7 @@ package com.greenbowl.greenbowlserver.recipe.adapter.out.persistence.recipe;
 import com.greenbowl.greenbowlserver.common.adapter.out.persistence.audit.BaseGeneralEntity;
 import com.greenbowl.greenbowlserver.common.utility.FormatValidator;
 import com.greenbowl.greenbowlserver.recipe.domain.Recipe;
+import com.greenbowl.greenbowlserver.recipe.domain.RecipeIngredient;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -70,21 +71,21 @@ public class RecipeJpaEntity extends BaseGeneralEntity {
         String recipeOneLineIntroduction = recipe.getOneLineIntroduction();
 
         if (FormatValidator.hasValue(recipeOneLineIntroduction)) {
-            return RecipeJpaEntity.builder()
+            RecipeJpaEntity recipeJpaEntity = RecipeJpaEntity.builder()
                     .name(recipe.getName())
                     .imageUrl(recipe.getImageUrl())
                     .cookingTime(recipe.getCookingTime())
                     .calories(recipe.getCalories())
                     .oneLineIntroduction(recipe.getOneLineIntroduction())
-                    .recipeIngredientJpaEntities(
-                            recipe.getRecipeIngredients()
-                                    .stream()
-                                    .map(RecipeIngredientJpaEntity::from)
-                                    .collect(Collectors.toList())
-                    )
                     .introduction(recipe.getIntroduction())
                     .embeddableNutrition(EmbeddableNutrition.from(recipe.getNutrition()))
                     .build();
+
+            List<RecipeIngredientJpaEntity> recipeIngredientJpaEntities
+                    = generateIngredientEntities(recipe.getRecipeIngredients(), recipeJpaEntity);
+            recipeJpaEntity.recipeIngredients = recipeIngredientJpaEntities;
+
+            return recipeJpaEntity;
         }
 
         return RecipeJpaEntity.builder()
@@ -93,5 +94,16 @@ public class RecipeJpaEntity extends BaseGeneralEntity {
                 .cookingTime(recipe.getCookingTime())
                 .calories(recipe.getCalories())
                 .build();
+    }
+
+    private static List<RecipeIngredientJpaEntity> generateIngredientEntities(
+            List<RecipeIngredient> recipeIngredients, RecipeJpaEntity recipeJpaEntity
+    ) {
+        return recipeIngredients
+                .stream()
+                .map(recipeIngredient -> RecipeIngredientJpaEntity.from(
+                        recipeIngredient, recipeJpaEntity
+                ))
+                .collect(Collectors.toList());
     }
 }

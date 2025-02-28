@@ -24,12 +24,13 @@ public class RecipeIngredientJpaEntity extends BaseGeneralEntity {
     @JoinColumn(name = "recipe_id")
     private RecipeJpaEntity recipe;
 
-    private RecipeIngredientJpaEntity(String name, short weight) {
+    private RecipeIngredientJpaEntity(String name, short weight, RecipeJpaEntity recipeJpaEntity) {
         this.name = name;
         this.weight = weight;
+        recipe = recipeJpaEntity;
     }
 
-    public static RecipeIngredientJpaEntity from(RecipeIngredient recipeIngredient) {
-        return new RecipeIngredientJpaEntity(recipeIngredient.getName(), recipeIngredient.getWeight());
+    public static RecipeIngredientJpaEntity from(RecipeIngredient recipeIngredient, RecipeJpaEntity recipeJpaEntity) {
+        return new RecipeIngredientJpaEntity(recipeIngredient.getName(), recipeIngredient.getWeight(), recipeJpaEntity);
     }
 }
