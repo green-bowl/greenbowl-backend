@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.greenbowl.greenbowlserver.common.configuration.InterceptorConfig
+com.greenbowl.greenbowlserver.common.configuration.InterceptorConfig,\
+com.greenbowl.greenbowlserver.common.configuration.AuditConfig
