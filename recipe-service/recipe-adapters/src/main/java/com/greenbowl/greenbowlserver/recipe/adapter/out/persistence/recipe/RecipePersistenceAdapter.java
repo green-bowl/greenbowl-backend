@@ -23,8 +23,19 @@ public class RecipePersistenceAdapter implements SaveRecipePort, FindRecipePort 
     }
 
     @Override
-    public Optional<Recipe> findById(Long id) {
-        return RecipeJpaEntityToDomainMapper.mapToOptionalDomainEntity(recipeRepository.findByIdAndDeleteYnFalse(id));
+    public List<Recipe> findByUserId(Long userId) {
+        /*
+        TODO: 회원 기능 구현 후 회원 ID 기반 조회 적용
+        return recipeRepository.findByUserIdAndDeleteYnFalseOrderByModifiedAtDesc(userId)
+                .stream()
+                .map(RecipeJpaEntityToDomainMapper::mapToDomainEntity)
+                .collect(Collectors.toList());
+         */
+
+        return recipeRepository.findByDeleteYnFalseOrderByModifiedAtDesc()
+                .stream()
+                .map(RecipeJpaEntityToDomainMapper::mapToDomainEntity)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -33,5 +44,10 @@ public class RecipePersistenceAdapter implements SaveRecipePort, FindRecipePort 
                 .stream()
                 .map(RecipeJpaEntityToDomainMapper::mapToDomainEntity)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<Recipe> findById(Long id) {
+        return RecipeJpaEntityToDomainMapper.mapToOptionalDomainEntity(recipeRepository.findByIdAndDeleteYnFalse(id));
     }
 }
