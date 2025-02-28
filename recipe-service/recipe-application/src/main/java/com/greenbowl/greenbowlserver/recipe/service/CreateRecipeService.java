@@ -1,6 +1,7 @@
 package com.greenbowl.greenbowlserver.recipe.service;
 
 import com.greenbowl.greenbowlserver.common.application.UseCase;
+import com.greenbowl.greenbowlserver.recipe.port.in.command.CreateDetailedRecipeCommand;
 import com.greenbowl.greenbowlserver.recipe.port.in.command.CreateRecipeCommand;
 import com.greenbowl.greenbowlserver.recipe.port.in.mapper.RecipeCommandToDomainMapper;
 import com.greenbowl.greenbowlserver.recipe.port.in.usecase.CreateRecipeUseCase;
@@ -22,5 +23,10 @@ public class CreateRecipeService implements CreateRecipeUseCase {
     @Override
     public void createRecipe(CreateRecipeCommand createRecipeCommand) {
         saveRecipePort.saveRecipe(RecipeCommandToDomainMapper.mapToDomainEntity(createRecipeCommand));
+    }
+
+    @Override
+    public void createRecipe(CreateDetailedRecipeCommand createDetailedRecipeCommand) {
+        saveRecipePort.saveRecipe(RecipeCommandToDomainMapper.mapToDomainEntity(createDetailedRecipeCommand));
     }
 }

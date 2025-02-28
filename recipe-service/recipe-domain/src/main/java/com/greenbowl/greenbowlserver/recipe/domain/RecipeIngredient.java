@@ -3,16 +3,16 @@ package com.greenbowl.greenbowlserver.recipe.domain;
 import lombok.Getter;
 
 @Getter
-public class RecipIngredient {
+public class RecipeIngredient {
     private String name;
     private short weight;
 
-    private RecipIngredient(String name, short weight) {
+    private RecipeIngredient(String name, short weight) {
         this.name = name;
         this.weight = weight;
     }
 
-    public static RecipIngredient of(String name, short weight) {
-        return new RecipIngredient(name, weight);
+    public static RecipeIngredient of(String name, short weight) {
+        return new RecipeIngredient(name, weight);
     }
 }

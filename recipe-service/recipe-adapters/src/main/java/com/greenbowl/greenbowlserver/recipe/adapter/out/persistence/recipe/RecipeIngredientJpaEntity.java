@@ -1,7 +1,7 @@
 package com.greenbowl.greenbowlserver.recipe.adapter.out.persistence.recipe;
 
 import com.greenbowl.greenbowlserver.common.adapter.out.persistence.audit.BaseGeneralEntity;
-import com.greenbowl.greenbowlserver.recipe.domain.RecipIngredient;
+import com.greenbowl.greenbowlserver.recipe.domain.RecipeIngredient;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,7 +29,7 @@ public class RecipeIngredientJpaEntity extends BaseGeneralEntity {
         this.weight = weight;
     }
 
-    public static RecipeIngredientJpaEntity from(RecipIngredient recipIngredient) {
-        return new RecipeIngredientJpaEntity(recipIngredient.getName(), recipIngredient.getWeight());
+    public static RecipeIngredientJpaEntity from(RecipeIngredient recipeIngredient) {
+        return new RecipeIngredientJpaEntity(recipeIngredient.getName(), recipeIngredient.getWeight());
     }
 }
