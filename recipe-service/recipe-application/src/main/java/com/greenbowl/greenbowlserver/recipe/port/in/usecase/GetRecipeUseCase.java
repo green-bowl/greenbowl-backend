@@ -5,7 +5,9 @@ import com.greenbowl.greenbowlserver.recipe.domain.Recipe;
 import java.util.List;
 
 public interface GetRecipeUseCase {
-    Recipe getRecipe(Long id);
+    List<Recipe> getRecipes(Long userId);
 
-    List<Recipe> getRecipe(String name);
+    List<Recipe> getRecipes(String name);
+
+    Recipe getRecipe(Long id);
 }

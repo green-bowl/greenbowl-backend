@@ -22,18 +22,23 @@ public class GetRecipeService implements GetRecipeUseCase {
     private final FindRecipePort findRecipePort;
 
     @Override
-    public Recipe getRecipe(Long id) {
-        return findRecipePort.findById(id)
-                .orElseThrow(() -> new RecipeNotFoundException(String.format(RECIPE_ID_NOT_FOUND_EXCEPTION_MESSAGE, id)));
+    public List<Recipe> getRecipes(Long userId) {
+        return findRecipePort.findByUserId(userId);
     }
 
     @Override
-    public List<Recipe> getRecipe(String name) {
+    public List<Recipe> getRecipes(String name) {
         List<Recipe> recipes = findRecipePort.findByName(name);
         if (FormatValidator.hasValue(recipes)) {
             return recipes;
         }
 
         throw new RecipeNotFoundException(String.format(RECIPE_NAME_NOT_FOUND_EXCEPTION_MESSAGE, name));
+    }
+
+    @Override
+    public Recipe getRecipe(Long id) {
+        return findRecipePort.findById(id)
+                .orElseThrow(() -> new RecipeNotFoundException(String.format(RECIPE_ID_NOT_FOUND_EXCEPTION_MESSAGE, id)));
     }
 }
