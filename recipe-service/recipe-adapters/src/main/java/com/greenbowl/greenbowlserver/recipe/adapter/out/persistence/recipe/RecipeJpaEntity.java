@@ -1,6 +1,7 @@
 package com.greenbowl.greenbowlserver.recipe.adapter.out.persistence.recipe;
 
 import com.greenbowl.greenbowlserver.common.adapter.out.persistence.audit.BaseGeneralEntity;
+import com.greenbowl.greenbowlserver.common.utility.FormatValidator;
 import com.greenbowl.greenbowlserver.recipe.domain.Recipe;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static javax.persistence.CascadeType.*;
 
@@ -24,10 +26,10 @@ public class RecipeJpaEntity extends BaseGeneralEntity {
     private String imageUrl;
 
     @Column(nullable = false)
-    private int cookingTime;
+    private short cookingTime;
 
     @Column(nullable = false)
-    private int calories;
+    private short calories;
 
     @Column(length = 511)
     private String oneLineIntroduction;
@@ -50,7 +52,7 @@ public class RecipeJpaEntity extends BaseGeneralEntity {
 
     @Builder
     private RecipeJpaEntity(
-            String name, String imageUrl, int cookingTime, int calories, String oneLineIntroduction,
+            String name, String imageUrl, short cookingTime, short calories, String oneLineIntroduction,
             List<RecipeIngredientJpaEntity> recipeIngredientJpaEntities, String introduction,
             EmbeddableNutrition embeddableNutrition
     ) {
@@ -65,6 +67,26 @@ public class RecipeJpaEntity extends BaseGeneralEntity {
     }
 
     public static RecipeJpaEntity from(Recipe recipe) {
+        String recipeOneLineIntroduction = recipe.getOneLineIntroduction();
+
+        if (FormatValidator.hasValue(recipeOneLineIntroduction)) {
+            return RecipeJpaEntity.builder()
+                    .name(recipe.getName())
+                    .imageUrl(recipe.getImageUrl())
+                    .cookingTime(recipe.getCookingTime())
+                    .calories(recipe.getCalories())
+                    .oneLineIntroduction(recipe.getOneLineIntroduction())
+                    .recipeIngredientJpaEntities(
+                            recipe.getRecipeIngredients()
+                                    .stream()
+                                    .map(RecipeIngredientJpaEntity::from)
+                                    .collect(Collectors.toList())
+                    )
+                    .introduction(recipe.getIntroduction())
+                    .embeddableNutrition(EmbeddableNutrition.from(recipe.getNutrition()))
+                    .build();
+        }
+
         return RecipeJpaEntity.builder()
                 .name(recipe.getName())
                 .imageUrl(recipe.getImageUrl())

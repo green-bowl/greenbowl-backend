@@ -1,7 +1,13 @@
 package com.greenbowl.greenbowlserver.recipe.port.in.mapper;
 
+import com.greenbowl.greenbowlserver.recipe.domain.Nutrition;
 import com.greenbowl.greenbowlserver.recipe.domain.Recipe;
+import com.greenbowl.greenbowlserver.recipe.domain.RecipeIngredient;
+import com.greenbowl.greenbowlserver.recipe.port.in.command.CreateDetailedRecipeCommand;
 import com.greenbowl.greenbowlserver.recipe.port.in.command.CreateRecipeCommand;
+import com.greenbowl.greenbowlserver.recipe.port.in.command.NutritionCommand;
+
+import java.util.stream.Collectors;
 
 public class RecipeCommandToDomainMapper {
     public static Recipe mapToDomainEntity(CreateRecipeCommand createRecipeCommand) {
@@ -10,6 +16,34 @@ public class RecipeCommandToDomainMapper {
                 createRecipeCommand.getImageUrl(),
                 createRecipeCommand.getCookingTime(),
                 createRecipeCommand.getCalories()
+        );
+    }
+
+    public static Recipe mapToDomainEntity(CreateDetailedRecipeCommand createDetailedRecipeCommand) {
+        return Recipe.of(
+                createDetailedRecipeCommand.getName(),
+                createDetailedRecipeCommand.getImageUrl(),
+                createDetailedRecipeCommand.getCookingTime(),
+                createDetailedRecipeCommand.getCalories(),
+                createDetailedRecipeCommand.getOneLineIntroduction(),
+                createDetailedRecipeCommand.getIngredients()
+                        .stream().
+                        map(ingredient -> RecipeIngredient.of(
+                                ingredient.getName(), ingredient.getWeight())
+                        )
+                        .collect(Collectors.toList()),
+                createDetailedRecipeCommand.getIntroduction(),
+                mapToDomain(createDetailedRecipeCommand.getNutrition())
+        );
+    }
+
+    private static Nutrition mapToDomain(NutritionCommand nutritionCommand) {
+        return Nutrition.of(
+                nutritionCommand.getCarbohydrate(),
+                nutritionCommand.getProtein(),
+                nutritionCommand.getFat(),
+                nutritionCommand.getSodium(),
+                nutritionCommand.getSugar()
         );
     }
 }
