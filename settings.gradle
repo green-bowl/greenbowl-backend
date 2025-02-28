@@ -1,5 +1,7 @@
 rootProject.name = 'greenbowl-server'
+
 include 'common'
+
 include 'recommendation-service'
 include 'recommendation-service:recommendation-adapters'
 findProject(':recommendation-service:recommendation-adapters')?.name = 'recommendation-adapters'
@@ -15,6 +17,14 @@ include 'fridge-service:fridge-application'
 findProject(':fridge-service:fridge-application')?.name = 'fridge-application'
 include 'fridge-service:fridge-domain'
 findProject(':fridge-service:fridge-domain')?.name = 'fridge-domain'
+
+include 'recipe-service'
+include 'recipe-service:recipe-adapters'
+findProject(':recipe-service:recipe-adapters')?.name = 'recipe-adapters'
+include 'recipe-service:recipe-application'
+findProject(':recipe-service:recipe-application')?.name = 'recipe-application'
+include 'recipe-service:recipe-domain'
+findProject(':recipe-service:recipe-domain')?.name = 'recipe-domain'
 
 include 'gateway-service'
 include 'gateway-service:gateway'
