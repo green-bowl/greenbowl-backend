@@ -1,7 +1,9 @@
 package com.greenbowl.greenbowlserver.fridge.adapter.in.web.controller;
 
 import com.greenbowl.greenbowlserver.fridge.adapter.in.web.response.GetIngredientResponse;
+import com.greenbowl.greenbowlserver.fridge.application.port.in.DefaultIngredientResult;
 import com.greenbowl.greenbowlserver.fridge.application.port.in.IngredientResult;
+import com.greenbowl.greenbowlserver.fridge.application.port.in.usecase.GetDefaultIngredientUseCase;
 import com.greenbowl.greenbowlserver.fridge.application.port.in.usecase.GetIngredientUseCase;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,6 +20,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class GetIngredientController {
     private final GetIngredientUseCase getIngredientUseCase;
+    private final GetDefaultIngredientUseCase getDefaultIngredientUseCase;
 
     private static final String GET_INGREDIENT = "냉장고 재료 조회";
     private static final String GET_CATEGORY_ITEM_DESCRIPTION =
@@ -27,11 +31,22 @@ public class GetIngredientController {
     public ResponseEntity<List<GetIngredientResponse>> getIngredient() {
         String userId = "1";
 
-        List<IngredientResult> responses = getIngredientUseCase.getIngredients(Long.parseLong(userId));
-        List<GetIngredientResponse> result = responses.stream()
+        List<IngredientResult> ingredientResults = getIngredientUseCase.getIngredients(Long.parseLong(userId));
+        List<DefaultIngredientResult> defaultIngredientResults = getDefaultIngredientUseCase.getDefaultIngredients(Long.parseLong(userId));
+        List<GetIngredientResponse> responses = new ArrayList<>();
 
-                .map(GetIngredientResponse::from).collect(Collectors.toList());
+        responses.addAll(
+                ingredientResults.stream()
+                        .map(GetIngredientResponse::from)
+                        .collect(Collectors.toList())
+        );
 
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+        responses.addAll(
+                defaultIngredientResults.stream()
+                        .map(GetIngredientResponse::from)
+                        .collect(Collectors.toList())
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(responses);
     }
 }

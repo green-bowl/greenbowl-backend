@@ -9,6 +9,7 @@ import com.greenbowl.greenbowlserver.fridge.domain.Ingredient;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,11 +33,14 @@ public class CreateIngredientController {
     @PostMapping("/ingredients")
     public ResponseEntity<List<CreateIngredientResponse>> createIngredient(
             @RequestBody @Valid @ApiParam(value = CREATE_INGREDIENT_FORM) List<CreateIngredientRequest> createIngredientRequest) {
+        String userId = "1";
         List<CreateIngredientCommand> command = createIngredientRequest.stream()
                 .map(FridgeRequestToCommandMapper::mapToCommand).collect(Collectors.toList());
 
-        List<Ingredient> ingredient = createIngredientUseCase.createIngredient(command);
-
-        return ResponseEntity.ok(CreateIngredientResponse.from(ingredient));
+        List<Ingredient> ingredient = createIngredientUseCase.createIngredient(Long.parseLong(userId), command);
+        List<CreateIngredientResponse> responses = ingredient.stream()
+                .map(CreateIngredientResponse::from)
+                .collect(Collectors.toList());
+        return ResponseEntity.status(HttpStatus.CREATED).body(responses);
     }
 }
