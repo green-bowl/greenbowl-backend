@@ -3,7 +3,9 @@ package com.greenbowl.greenbowlserver.fridge.adapter.in.web.controller;
 import com.greenbowl.greenbowlserver.fridge.adapter.in.web.response.GetCategoryItemBySequenceResponse;
 import com.greenbowl.greenbowlserver.fridge.adapter.in.web.response.GetCategoryItemResponse;
 import com.greenbowl.greenbowlserver.fridge.application.port.in.usecase.GetCategoryItemUseCase;
+import com.greenbowl.greenbowlserver.fridge.application.port.in.usecase.GetDefaultCategoryItemUseCase;
 import com.greenbowl.greenbowlserver.fridge.domain.CategoryItem;
+import com.greenbowl.greenbowlserver.fridge.domain.DefaultCategoryItem;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +22,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class GetCategoryItemController {
     private final GetCategoryItemUseCase getCategoryItemUseCase;
+    private final GetDefaultCategoryItemUseCase getDefaultCategoryItemUseCase;
 
     private static final String GET_CATEGORY_ITEM = "카테고리 리스트 조회";
     private static final String GET_CATEGORY_ITEM_DESCRIPTION =
@@ -36,10 +40,23 @@ public class GetCategoryItemController {
         List<CategoryItem> categoryItems = getCategoryItemUseCase
                 .getCategoryItemBySequence(Long.parseLong(userId), Integer.parseInt(sequence));
 
-        List<GetCategoryItemBySequenceResponse> responses =
+        List<DefaultCategoryItem> defaultCategoryItems = getDefaultCategoryItemUseCase
+                .getDefaultCategoryItemBySequence(Integer.parseInt(sequence));
+
+        List<GetCategoryItemBySequenceResponse> responses = new ArrayList<>();
+
+        responses.addAll(
                 categoryItems.stream()
                         .map(GetCategoryItemBySequenceResponse::from)
-                        .collect(Collectors.toList());
+                        .collect(Collectors.toList())
+        );
+
+        responses.addAll(
+                defaultCategoryItems.stream()
+                        .map(GetCategoryItemBySequenceResponse::from)
+                        .collect(Collectors.toList())
+        );
+
         return ResponseEntity.status(HttpStatus.OK).body(responses);
     }
 

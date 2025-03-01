@@ -6,5 +6,5 @@ import com.greenbowl.greenbowlserver.fridge.domain.Ingredient;
 import java.util.List;
 
 public interface CreateIngredientUseCase {
-    List<Ingredient> createIngredient(List<CreateIngredientCommand> command);
+    List<Ingredient> createIngredient(Long userId, List<CreateIngredientCommand> command);
 }

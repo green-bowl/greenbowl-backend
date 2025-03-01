@@ -19,12 +19,12 @@ public class CreateIngredientService implements CreateIngredientUseCase {
     private final CreateIngredientPort createIngredientPort;
 
     @Override
-    public List<Ingredient> createIngredient(List<CreateIngredientCommand> createIngredientCommands) {
+    public List<Ingredient> createIngredient(Long userId, List<CreateIngredientCommand> createIngredientCommands) {
 
         List<Ingredient> ingredients = createIngredientCommands.stream()
                 .map(IngredientCommandToDomainMapper::mapToDomainEntity)
                 .collect(Collectors.toList());
 
-        return createIngredientPort.saveIngredient(ingredients);
+        return createIngredientPort.saveIngredient(userId, ingredients);
     }
 }

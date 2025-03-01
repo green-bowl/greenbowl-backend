@@ -5,15 +5,18 @@ import com.greenbowl.greenbowlserver.fridge.adapter.out.persistance.categoryitem
 import com.greenbowl.greenbowlserver.fridge.adapter.out.persistance.categoryitem.CategoryItemJpaRepository;
 import com.greenbowl.greenbowlserver.fridge.application.port.in.IngredientResult;
 import com.greenbowl.greenbowlserver.fridge.application.port.in.command.DeleteIngredientCommand;
-import com.greenbowl.greenbowlserver.fridge.application.port.out.*;
+import com.greenbowl.greenbowlserver.fridge.application.port.out.CreateIngredientPort;
+import com.greenbowl.greenbowlserver.fridge.application.port.out.DeleteIngredientPort;
+import com.greenbowl.greenbowlserver.fridge.application.port.out.GetIngredientPort;
+import com.greenbowl.greenbowlserver.fridge.application.port.out.UpdateIngredientPort;
 import com.greenbowl.greenbowlserver.fridge.domain.CategoryItem;
 import com.greenbowl.greenbowlserver.fridge.domain.Ingredient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
@@ -24,13 +27,23 @@ public class IngredientPersistenceAdapter implements
     private final CategoryItemJpaRepository categoryItemJpaRepository;
 
     @Override
-    public List<Ingredient> saveIngredient(List<Ingredient> ingredients) {
+    public List<Ingredient> saveIngredient(Long userId, List<Ingredient> ingredients) {
+        List<Long> categoryIds = ingredients.stream()
+                .map(Ingredient::getCategoryId)
+                .distinct()
+                .collect(Collectors.toList());
+
+        Map<Long, CategoryItemJpaEntity> categoryMap = categoryItemJpaRepository
+                .findAllByUserIdAndIdIn(userId, categoryIds)
+                .stream()
+                .collect(Collectors.toMap(CategoryItemJpaEntity::getId, Function.identity()));
+
         List<IngredientJpaEntity> entities = ingredients.stream()
                 .map(ingredient -> {
-
-                    CategoryItemJpaEntity categoryItemJpaEntity = categoryItemJpaRepository.findById(ingredient.getCategoryId())
-                            .orElseThrow(() -> new IllegalArgumentException("카테고리를 찾을 수 없음: " + ingredient.getCategoryId()));
-
+                    CategoryItemJpaEntity categoryItemJpaEntity = categoryMap.get(ingredient.getCategoryId());
+                    if (categoryItemJpaEntity == null) {
+                        throw new IllegalArgumentException("카테고리를 찾을 수 없음: " + ingredient.getCategoryId());
+                    }
                     return IngredientJpaEntity.from(ingredient, categoryItemJpaEntity);
                 })
                 .collect(Collectors.toList());
@@ -47,13 +60,12 @@ public class IngredientPersistenceAdapter implements
         List<CategoryItemJpaEntity> categoryItemEntities = categoryItemJpaRepository
                 .findAllByUserIdAndDeleteYnFalse(userId);
 
-        List<IngredientJpaEntity> ingredientEntities = new ArrayList<>();
+        List<Long> categoryIds = categoryItemEntities.stream()
+                .map(CategoryItemJpaEntity::getId)
+                .collect(Collectors.toList());
 
-        for (CategoryItemJpaEntity categoryItemEntity : categoryItemEntities) {
-            List<IngredientJpaEntity> ingredientsForCategory =
-                    ingredientJpaRepository.findAllByCategoryItemJpaEntity_IdAndDeleteYnFalse(categoryItemEntity.getId());
-            ingredientEntities.addAll(ingredientsForCategory);
-        }
+        List<IngredientJpaEntity> ingredientEntities = ingredientJpaRepository
+                .findAllByCategoryItemJpaEntityIdInAndDeleteYnFalse(categoryIds);
 
         return ingredientEntities.stream()
                 .map(FridgeJpaEntityToDomainMapper::mapToDomainEntity)

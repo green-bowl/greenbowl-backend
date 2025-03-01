@@ -1,5 +1,6 @@
 package com.greenbowl.greenbowlserver.fridge.adapter.in.web.response;
 
+import com.greenbowl.greenbowlserver.fridge.application.port.in.DefaultIngredientResult;
 import com.greenbowl.greenbowlserver.fridge.application.port.in.IngredientResult;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,6 +27,17 @@ public class UpdateIngredientResponse {
                 .expirationDate(ingredientResult.getExpirationDate())
                 .sequence(ingredientResult.getSequence())
                 .categoryDetail(ingredientResult.getCategoryDetail())
+                .build();
+    }
+
+    public static UpdateIngredientResponse from(DefaultIngredientResult defaultIngredientResult) {
+        return UpdateIngredientResponse.builder()
+                .id(defaultIngredientResult.getId())
+                .quantity(defaultIngredientResult.getQuantity())
+                .storageMethod(defaultIngredientResult.getStorageMethod())
+                .expirationDate(defaultIngredientResult.getExpirationDate())
+                .sequence(defaultIngredientResult.getSequence())
+                .categoryDetail(defaultIngredientResult.getCategoryDetail())
                 .build();
     }
 }

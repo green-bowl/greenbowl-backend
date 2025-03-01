@@ -1,12 +1,12 @@
 package com.greenbowl.greenbowlserver.fridge.adapter.out.persistance.ingredient;
 
+import com.greenbowl.greenbowlserver.fridge.adapter.out.persistance.categoryitem.CategoryItemJpaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
 public interface IngredientJpaRepository extends JpaRepository<IngredientJpaEntity, Long> {
-//    IngredientJpaEntity findByCategoryItemAndDeleteYnFalse(CategoryItemJpaEntity categoryItemJpaEntity);
-    IngredientJpaEntity findByCategoryItemJpaEntity_IdAndDeleteYnFalse(Long categoryItemId);
+    List<IngredientJpaEntity> findAllByCategoryItemJpaEntityAndDeleteYnFalse(CategoryItemJpaEntity categoryItemJpaEntity);
 
-    List<IngredientJpaEntity> findAllByCategoryItemJpaEntity_IdAndDeleteYnFalse(Long id);
+    List<IngredientJpaEntity> findAllByCategoryItemJpaEntityIdInAndDeleteYnFalse(List<Long> categoryIds);
 }
