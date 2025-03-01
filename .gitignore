@@ -38,3 +38,5 @@ out/
 
 ### ETC ###
 db/
+.env
+**/logs/**
