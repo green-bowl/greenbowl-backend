@@ -26,6 +26,14 @@ findProject(':recipe-service:recipe-application')?.name = 'recipe-application'
 include 'recipe-service:recipe-domain'
 findProject(':recipe-service:recipe-domain')?.name = 'recipe-domain'
 
+include 'user-service'
+include 'user-service:user-adapters'
+findProject(':user-service:user-adapters')?.name = 'user-adapters'
+include 'user-service:user-application'
+findProject(':user-service:user-application')?.name = 'user-application'
+include 'user-service:user-domain'
+findProject(':user-service:user-domain')?.name = 'user-domain'
+
 include 'gateway-service'
 include 'gateway-service:gateway'
 
