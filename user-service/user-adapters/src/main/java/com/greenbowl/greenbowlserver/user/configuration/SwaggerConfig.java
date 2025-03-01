@@ -12,8 +12,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.util.StringUtils;
+import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.ApiKey;
 import springfox.documentation.service.AuthorizationScope;
 import springfox.documentation.service.SecurityReference;
@@ -39,6 +41,7 @@ SwaggerConfig {
                 .apis(RequestHandlerSelectors.basePackage("com.greenbowl.greenbowlserver.user"))
                 .paths(PathSelectors.any())
                 .build()
+                .apiInfo(apiInfo())
                 .securityContexts(Arrays.asList(securityContext()))
                 .securitySchemes(Arrays.asList(apiKey()))
                 .pathMapping("/api/users");
@@ -58,6 +61,14 @@ SwaggerConfig {
 
     private ApiKey apiKey() {
         return new ApiKey("JWT", "Authorization", "header");
+    }
+
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("그린볼 AI 회원 서버 API")
+                .description("스마트 헬스 푸드 케어 서비스 그린볼의 회원 서버 API입니다.")
+                .version("1.0")
+                .build();
     }
 
     @Bean
