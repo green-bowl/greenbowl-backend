@@ -44,7 +44,7 @@ SwaggerConfig {
                 .apiInfo(apiInfo())
                 .securityContexts(Arrays.asList(securityContext()))
                 .securitySchemes(Arrays.asList(apiKey()))
-                .pathMapping("/api/recipe");
+                .pathMapping("/api/recipes");
     }
 
     private SecurityContext securityContext() {
