@@ -19,6 +19,7 @@ spring:
             - Path=/category-items/**,/ingredients/**
 eureka:
   client:
-    enabled: false
+    service-url:
+      defaultZone: http://eureka:8761/eureka
 logging:
   config: classpath:logback-spring.xml
