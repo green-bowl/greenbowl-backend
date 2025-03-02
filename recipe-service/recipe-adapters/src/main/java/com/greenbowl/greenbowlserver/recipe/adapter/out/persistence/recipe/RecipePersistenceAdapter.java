@@ -3,6 +3,7 @@ package com.greenbowl.greenbowlserver.recipe.adapter.out.persistence.recipe;
 import com.greenbowl.greenbowlserver.common.adapter.out.PersistenceAdapter;
 import com.greenbowl.greenbowlserver.recipe.adapter.out.mapper.RecipeJpaEntityToDomainMapper;
 import com.greenbowl.greenbowlserver.recipe.domain.Recipe;
+import com.greenbowl.greenbowlserver.recipe.port.out.DeleteRecipePort;
 import com.greenbowl.greenbowlserver.recipe.port.out.FindRecipePort;
 import com.greenbowl.greenbowlserver.recipe.port.out.SaveRecipePort;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
-public class RecipePersistenceAdapter implements SaveRecipePort, FindRecipePort {
+public class RecipePersistenceAdapter implements SaveRecipePort, FindRecipePort, DeleteRecipePort {
     private final RecipeRepository recipeRepository;
 
     @Override
@@ -49,5 +50,17 @@ public class RecipePersistenceAdapter implements SaveRecipePort, FindRecipePort 
     @Override
     public Optional<Recipe> findById(Long id) {
         return RecipeJpaEntityToDomainMapper.mapToOptionalDomainEntity(recipeRepository.findByIdAndDeleteYnFalse(id));
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        RecipeJpaEntity recipeJpaEntity = recipeRepository.findByIdAndDeleteYnFalse(id);
+        recipeJpaEntity.delete();
+    }
+
+    @Override
+    public void deleteByName(String name) {
+        List<RecipeJpaEntity> recipeJpaEntities = recipeRepository.findByNameAndDeleteYnFalse(name);
+        recipeJpaEntities.forEach(RecipeJpaEntity::delete);
     }
 }

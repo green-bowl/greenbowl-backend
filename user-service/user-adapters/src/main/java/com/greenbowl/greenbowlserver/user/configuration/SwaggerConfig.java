@@ -43,8 +43,8 @@ SwaggerConfig {
                 .build()
                 .apiInfo(apiInfo())
                 .securityContexts(Arrays.asList(securityContext()))
-                .securitySchemes(Arrays.asList(apiKey()))
-                .pathMapping("/api/users");
+                .securitySchemes(Arrays.asList(apiKey()));
+//                .pathMapping("/api/users");
     }
 
     private SecurityContext securityContext() {

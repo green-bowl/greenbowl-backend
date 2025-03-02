@@ -28,6 +28,6 @@ spring:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
 frontend:
-  url: ${GREENBOWL_FRONTEND_URL}
+  url: '*'
 logging:
   config: classpath:logback-spring.xml
