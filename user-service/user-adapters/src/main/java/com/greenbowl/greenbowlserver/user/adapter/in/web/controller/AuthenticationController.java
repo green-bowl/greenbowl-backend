@@ -10,6 +10,7 @@ import com.greenbowl.greenbowlserver.user.port.in.usecase.AuthenticationUseCase;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,10 +34,13 @@ public class AuthenticationController {
         SignInCommand signInCommand = UserRequestToCommandMapper.mapToCommand(signInRequest);
         AuthenticationResult authenticationResult = authenticationUseCase.signInUser(signInCommand);
 
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setBearerAuth(authenticationResult.getAccessToken());
+
         if (authenticationResult.isNewUser()) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(SignInResponse.from(authenticationResult));
+            return ResponseEntity.status(HttpStatus.CREATED).headers(httpHeaders).body(SignInResponse.from(authenticationResult));
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(SignInResponse.from(authenticationResult));
+        return ResponseEntity.status(HttpStatus.OK).headers(httpHeaders).body(SignInResponse.from(authenticationResult));
     }
 }

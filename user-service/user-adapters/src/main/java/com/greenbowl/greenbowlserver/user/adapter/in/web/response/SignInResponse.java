@@ -19,12 +19,10 @@ public class SignInResponse {
     private final LocalDateTime loggedInAt;
 
     private final boolean isNewUser;
-    private final String accessToken;
 
     @Builder
-    private SignInResponse(Long userId, String accessToken, boolean isNewUser, LocalDateTime loggedInAt) {
+    private SignInResponse(Long userId, boolean isNewUser, LocalDateTime loggedInAt) {
         this.userId = userId;
-        this.accessToken = accessToken;
         this.isNewUser = isNewUser;
         this.loggedInAt = loggedInAt;
     }
@@ -34,7 +32,6 @@ public class SignInResponse {
                 .userId(authenticationResult.getUserId())
                 .loggedInAt(authenticationResult.getLastLoggedInAt())
                 .isNewUser(authenticationResult.isNewUser())
-                .accessToken(authenticationResult.getAccessToken())
                 .build();
     }
 }
