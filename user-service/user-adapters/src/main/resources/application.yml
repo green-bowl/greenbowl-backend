@@ -25,11 +25,11 @@ spring:
     serialization:
       fail-on-empty-beans: false
   jwt:
-    secret: c7f792dqwe88182c1qwe06b7030869caaasd78f703690ef37b3119qw1fef2708asda2446986bc2
+    secret: key
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
 frontend:
-  url: '*'
+  url: ${GREENBOWL_FRONTEND_URL}
 logging:
   config: classpath:logback-spring.xml
