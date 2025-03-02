@@ -25,7 +25,7 @@ spring:
     serialization:
       fail-on-empty-beans: false
   jwt:
-    secret: key
+    secret: ${GREENBOWL_JWT_SECRET_KEY}
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER

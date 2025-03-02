@@ -9,6 +9,7 @@ import java.util.List;
 @Getter
 public class Recipe {
     private Long id;
+    private Long userId;
     private String name;
     private String imageUrl;
     private short cookingTime;
@@ -22,11 +23,12 @@ public class Recipe {
 
     @Builder
     private Recipe(
-            Long id, String name, String imageUrl, short cookingTime, short calories,
+            Long id, Long userId, String name, String imageUrl, short cookingTime, short calories,
             String oneLineIntroduction, List<RecipeIngredient> recipeIngredients, String introduction,
             Nutrition nutrition, LocalDateTime createdAt, LocalDateTime modifiedAt
     ) {
         this.id = id;
+        this.userId = userId;
         this.name = name;
         this.imageUrl = imageUrl;
         this.cookingTime = cookingTime;
@@ -39,8 +41,9 @@ public class Recipe {
         this.modifiedAt = modifiedAt;
     }
 
-    public static Recipe of(String name, String imageUrl, short cookingTime, short calories) {
+    public static Recipe of(Long userId, String name, String imageUrl, short cookingTime, short calories) {
         return Recipe.builder()
+                .userId(userId)
                 .name(name)
                 .imageUrl(imageUrl)
                 .cookingTime(cookingTime)
@@ -49,10 +52,11 @@ public class Recipe {
     }
 
     public static Recipe of(
-            String name, String imageUrl, short cookingTime, short calories, String oneLineIntroduction,
+            Long userId, String name, String imageUrl, short cookingTime, short calories, String oneLineIntroduction,
             List<RecipeIngredient> recipeIngredients, String introduction, Nutrition nutrition
     ) {
         return Recipe.builder()
+                .userId(userId)
                 .name(name)
                 .imageUrl(imageUrl)
                 .cookingTime(cookingTime)
@@ -65,12 +69,13 @@ public class Recipe {
     }
 
     public static Recipe of(
-            Long id, String name, String imageUrl, short cookingTime, short calories, String oneLineIntroduction,
+            Long id, Long userId, String name, String imageUrl, short cookingTime, short calories, String oneLineIntroduction,
             List<RecipeIngredient> recipeIngredients, String introduction, Nutrition nutrition,
             LocalDateTime createdAt, LocalDateTime modifiedAt
     ) {
         return Recipe.builder()
                 .id(id)
+                .userId(userId)
                 .name(name)
                 .imageUrl(imageUrl)
                 .cookingTime(cookingTime)

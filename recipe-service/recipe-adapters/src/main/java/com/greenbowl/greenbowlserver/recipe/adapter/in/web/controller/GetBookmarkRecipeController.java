@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -24,10 +25,9 @@ public class GetBookmarkRecipeController {
     private final GetRecipeUseCase getRecipeUseCase;
 
     @GetMapping()
-    public ResponseEntity<List<GetRecipeResponse>> getUserRecipes() {
-        // TODO: 회원 기능 구현 후 JWT Payload 디코딩을 통한 실제 회원 ID로 대체
-        String userId = "1";
-
+    public ResponseEntity<List<GetRecipeResponse>> getUserRecipes(
+            @RequestHeader(value = "userId", required = false, defaultValue = "1") String userId
+    ) {
         List<Recipe> recipes = getRecipeUseCase.getRecipes(FormatConverter.parseToLong(userId));
 
         return ResponseEntity.status(OK).body(

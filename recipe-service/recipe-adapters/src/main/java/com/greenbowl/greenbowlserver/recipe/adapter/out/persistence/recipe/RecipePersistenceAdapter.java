@@ -25,15 +25,7 @@ public class RecipePersistenceAdapter implements SaveRecipePort, FindRecipePort,
 
     @Override
     public List<Recipe> findByUserId(Long userId) {
-        /*
-        TODO: 회원 기능 구현 후 회원 ID 기반 조회 적용
         return recipeRepository.findByUserIdAndDeleteYnFalseOrderByModifiedAtDesc(userId)
-                .stream()
-                .map(RecipeJpaEntityToDomainMapper::mapToDomainEntity)
-                .collect(Collectors.toList());
-         */
-
-        return recipeRepository.findByDeleteYnFalseOrderByModifiedAtDesc()
                 .stream()
                 .map(RecipeJpaEntityToDomainMapper::mapToDomainEntity)
                 .collect(Collectors.toList());
