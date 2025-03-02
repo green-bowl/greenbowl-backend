@@ -14,6 +14,7 @@ import com.greenbowl.greenbowlserver.fridge.domain.Ingredient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -28,23 +29,31 @@ public class IngredientPersistenceAdapter implements
 
     @Override
     public List<Ingredient> saveIngredient(Long userId, List<Ingredient> ingredients) {
+        List<CategoryItemJpaEntity> defaultCategoryItems = categoryItemJpaRepository
+                .findAllByUserIdNullAndDeleteYnFalseAndIsDefaultTrue();
+        Map<Long, CategoryItemJpaEntity> defaultCategoryMap = defaultCategoryItems.stream()
+                .collect(Collectors.toMap(CategoryItemJpaEntity::getId, Function.identity()));
+
         List<Long> categoryIds = ingredients.stream()
                 .map(Ingredient::getCategoryId)
                 .distinct()
                 .collect(Collectors.toList());
-
         Map<Long, CategoryItemJpaEntity> categoryMap = categoryItemJpaRepository
                 .findAllByUserIdAndIdIn(userId, categoryIds)
                 .stream()
                 .collect(Collectors.toMap(CategoryItemJpaEntity::getId, Function.identity()));
 
+        Map<Long, CategoryItemJpaEntity> combinedCategoryMap = new HashMap<>();
+        combinedCategoryMap.putAll(defaultCategoryMap);
+        combinedCategoryMap.putAll(categoryMap);
+
         List<IngredientJpaEntity> entities = ingredients.stream()
                 .map(ingredient -> {
-                    CategoryItemJpaEntity categoryItemJpaEntity = categoryMap.get(ingredient.getCategoryId());
+                    CategoryItemJpaEntity categoryItemJpaEntity = combinedCategoryMap.get(ingredient.getCategoryId());
                     if (categoryItemJpaEntity == null) {
                         throw new IllegalArgumentException("카테고리를 찾을 수 없음: " + ingredient.getCategoryId());
                     }
-                    return IngredientJpaEntity.from(ingredient, categoryItemJpaEntity);
+                    return IngredientJpaEntity.from(ingredient, categoryItemJpaEntity, userId);
                 })
                 .collect(Collectors.toList());
 
@@ -57,15 +66,8 @@ public class IngredientPersistenceAdapter implements
 
     @Override
     public List<Ingredient> getIngredientsByUserId(Long userId) {
-        List<CategoryItemJpaEntity> categoryItemEntities = categoryItemJpaRepository
-                .findAllByUserIdAndDeleteYnFalse(userId);
-
-        List<Long> categoryIds = categoryItemEntities.stream()
-                .map(CategoryItemJpaEntity::getId)
-                .collect(Collectors.toList());
-
         List<IngredientJpaEntity> ingredientEntities = ingredientJpaRepository
-                .findAllByCategoryItemJpaEntityIdInAndDeleteYnFalse(categoryIds);
+                .findAllByUserIdAndDeleteYnFalse(userId);
 
         return ingredientEntities.stream()
                 .map(FridgeJpaEntityToDomainMapper::mapToDomainEntity)
@@ -76,25 +78,16 @@ public class IngredientPersistenceAdapter implements
     public List<IngredientResult> updateIngredients(Long userId,
                                                     List<Ingredient> ingredients) {
 
-        List<CategoryItemJpaEntity> categoryItemJpaEntities = categoryItemJpaRepository
-                .findAllByUserIdAndDeleteYnFalse(userId);
-
-        Map<Long, CategoryItemJpaEntity> categoryItemMap = categoryItemJpaEntities.stream()
-                .collect(Collectors.toMap(CategoryItemJpaEntity::getId, entity -> entity));
-
         List<IngredientJpaEntity> updateEntities = ingredients.stream()
                 .map(ingredient -> {
                     IngredientJpaEntity existingEntity = ingredientJpaRepository.findById(ingredient.getId())
                             .orElseThrow(() -> new IllegalArgumentException("재료를 찾을 수 없음: " + ingredient.getId()));
 
-                    CategoryItemJpaEntity categoryItemJpaEntity = categoryItemMap.get(ingredient.getCategoryId());
-
-                    if (categoryItemJpaEntity == null) {
-                        throw new IllegalArgumentException("해당 사용자에 대한 카테고리를 찾을 수 없음: " + ingredient.getCategoryId());
-                    }
+                    CategoryItemJpaEntity categoryItemJpaEntity = categoryItemJpaRepository
+                            .findByIdAndDeleteYnFalse(ingredient.getId())
+                            .orElseThrow(()-> new IllegalArgumentException("카테고리를 찾을 수 없음" + ingredient.getCategoryId()));
 
                     existingEntity.update(ingredient, categoryItemJpaEntity);
-
                     return existingEntity;
                 })
                 .collect(Collectors.toList());
@@ -111,7 +104,7 @@ public class IngredientPersistenceAdapter implements
     @Override
     public void deleteIngredient(List<DeleteIngredientCommand> deleteIngredientCommands) {
         deleteIngredientCommands.forEach(command -> {
-            IngredientJpaEntity entity = ingredientJpaRepository.findById(command.getId())
+            IngredientJpaEntity entity = ingredientJpaRepository.findByIdAndDeleteYnFalse(command.getId())
                     .orElseThrow(() -> new IllegalArgumentException("재료를 찾을 수 없음: " + command.getId()));
             entity.deleteIngredient();
         });

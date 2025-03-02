@@ -5,7 +5,6 @@ import com.greenbowl.greenbowlserver.fridge.adapter.in.web.response.GetCategoryI
 import com.greenbowl.greenbowlserver.fridge.application.port.in.usecase.GetCategoryItemUseCase;
 import com.greenbowl.greenbowlserver.fridge.application.port.in.usecase.GetDefaultCategoryItemUseCase;
 import com.greenbowl.greenbowlserver.fridge.domain.CategoryItem;
-import com.greenbowl.greenbowlserver.fridge.domain.DefaultCategoryItem;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -40,8 +39,8 @@ public class GetCategoryItemController {
         List<CategoryItem> categoryItems = getCategoryItemUseCase
                 .getCategoryItemBySequence(Long.parseLong(userId), Integer.parseInt(sequence));
 
-        List<DefaultCategoryItem> defaultCategoryItems = getDefaultCategoryItemUseCase
-                .getDefaultCategoryItemBySequence(Integer.parseInt(sequence));
+//        List<DefaultCategoryItem> defaultCategoryItems = getDefaultCategoryItemUseCase
+//                .getDefaultCategoryItemBySequence(Integer.parseInt(sequence));
 
         List<GetCategoryItemBySequenceResponse> responses = new ArrayList<>();
 
@@ -51,11 +50,11 @@ public class GetCategoryItemController {
                         .collect(Collectors.toList())
         );
 
-        responses.addAll(
-                defaultCategoryItems.stream()
-                        .map(GetCategoryItemBySequenceResponse::from)
-                        .collect(Collectors.toList())
-        );
+//        responses.addAll(
+//                defaultCategoryItems.stream()
+//                        .map(GetCategoryItemBySequenceResponse::from)
+//                        .collect(Collectors.toList())
+//        );
 
         return ResponseEntity.status(HttpStatus.OK).body(responses);
     }

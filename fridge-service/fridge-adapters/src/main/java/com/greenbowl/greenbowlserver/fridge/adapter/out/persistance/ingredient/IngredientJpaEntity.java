@@ -28,6 +28,9 @@ public class IngredientJpaEntity extends BaseGeneralEntity {
     @Column(nullable = false)
     private LocalDate expirationDate;
 
+    @Column(nullable = false)
+    private Long userId;
+
     @ManyToOne
     @JoinColumn(name = "category_item_id", nullable = false)
     private CategoryItemJpaEntity categoryItemJpaEntity;
@@ -37,11 +40,12 @@ public class IngredientJpaEntity extends BaseGeneralEntity {
     }
 
     @Builder
-    public IngredientJpaEntity(Quantity quantity, StorageMethod storageMethod, LocalDate expirationDate, CategoryItemJpaEntity categoryItemJpaEntity) {
+    public IngredientJpaEntity(Quantity quantity, StorageMethod storageMethod, LocalDate expirationDate, CategoryItemJpaEntity categoryItemJpaEntity, Long userId) {
         this.quantity = quantity;
         this.storageMethod = storageMethod;
         this.expirationDate = expirationDate;
         this.categoryItemJpaEntity = categoryItemJpaEntity;
+        this.userId = userId;
     }
 
     public IngredientJpaEntity update(Ingredient ingredient, CategoryItemJpaEntity categoryItemJpaEntity) {
@@ -52,12 +56,13 @@ public class IngredientJpaEntity extends BaseGeneralEntity {
         return this;
     }
 
-    public static IngredientJpaEntity from(Ingredient ingredient, CategoryItemJpaEntity categoryItemJpaEntity) {
+    public static IngredientJpaEntity from(Ingredient ingredient, CategoryItemJpaEntity categoryItemJpaEntity, Long userId) {
         Quantity quantity = ingredient.getQuantity();
         LocalDate expirationDate = ingredient.getExpirationDate();
         StorageMethod storageMethod = ingredient.getStorageMethod();
 
         return IngredientJpaEntity.builder()
+                .userId(userId)
                 .storageMethod(storageMethod)
                 .quantity(quantity)
                 .expirationDate(expirationDate)

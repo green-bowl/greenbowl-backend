@@ -12,6 +12,7 @@ public class CategoryItemCommandToDomainMapper {
                 .userId(userId)
                 .categoryDetail(CategoryDetail.of(createCategoryItemCommand.getCategoryDetail()))
                 .category(Category.from(createCategoryItemCommand.getSequence()))
+                .isDefault(false)
                 .build();
     }
 

@@ -11,12 +11,14 @@ public class CategoryItem {
     private final Long userId;
     private final CategoryDetail categoryDetail;
     private final Category category;
+    private final boolean isDefault;
 
     @Builder
-    public CategoryItem(Long id,Long userId, CategoryDetail categoryDetail, Category category) {
+    public CategoryItem(Long id,Long userId, CategoryDetail categoryDetail, Category category, boolean isDefault) {
         this.id = id;
         this.userId = userId;
         this.categoryDetail = categoryDetail;
         this.category = category;
+        this.isDefault = isDefault;
     }
 }

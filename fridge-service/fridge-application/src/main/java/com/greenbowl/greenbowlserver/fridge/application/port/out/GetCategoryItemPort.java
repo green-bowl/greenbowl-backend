@@ -6,11 +6,7 @@ import com.greenbowl.greenbowlserver.fridge.domain.wrapper.Category;
 import java.util.List;
 
 public interface GetCategoryItemPort {
-    CategoryItem getCategoryItem(Long userId);
-
+    List<CategoryItem> getCategoryItemsByIds(List<Long> ids);
     List<CategoryItem> getCategoryItemsByUserId(Long userId);
-
-    CategoryItem getCategoryItemById(Long categoryId);
-
     List<CategoryItem> getCategoryItemsByUserIdAndSequence(Long userId, Category category);
 }

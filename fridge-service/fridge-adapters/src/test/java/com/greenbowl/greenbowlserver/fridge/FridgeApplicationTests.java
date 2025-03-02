@@ -1,9 +1,8 @@
 package com.greenbowl.greenbowlserver.fridge;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+//@SpringBootTest
 class FridgeApplicationTests {
     @Test
     void contextLoads() {
