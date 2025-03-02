@@ -106,4 +106,8 @@ public class RecipeJpaEntity extends BaseGeneralEntity {
                 ))
                 .collect(Collectors.toList());
     }
+
+    public void delete() {
+        deleteEntity();
+    }
 }
