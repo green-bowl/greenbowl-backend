@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 public class RecipeCommandToDomainMapper {
     public static Recipe mapToDomainEntity(CreateRecipeCommand createRecipeCommand) {
         return Recipe.of(
+                createRecipeCommand.getUserId(),
                 createRecipeCommand.getName(),
                 createRecipeCommand.getImageUrl(),
                 createRecipeCommand.getCookingTime(),
@@ -21,6 +22,7 @@ public class RecipeCommandToDomainMapper {
 
     public static Recipe mapToDomainEntity(CreateDetailedRecipeCommand createDetailedRecipeCommand) {
         return Recipe.of(
+                createDetailedRecipeCommand.getUserId(),
                 createDetailedRecipeCommand.getName(),
                 createDetailedRecipeCommand.getImageUrl(),
                 createDetailedRecipeCommand.getCookingTime(),

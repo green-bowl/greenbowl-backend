@@ -18,6 +18,7 @@ public class RecipeJpaEntityToDomainMapper {
                 .filter(FormatValidator::hasValue)
                 .map(entity -> Recipe.of(
                         entity.getId(),
+                        entity.getUserId(),
                         entity.getName(),
                         entity.getImageUrl(),
                         entity.getCookingTime(),
@@ -34,6 +35,7 @@ public class RecipeJpaEntityToDomainMapper {
     public static Recipe mapToDomainEntity(RecipeJpaEntity recipeJpaEntity) {
         return Recipe.of(
                 recipeJpaEntity.getId(),
+                recipeJpaEntity.getUserId(),
                 recipeJpaEntity.getName(),
                 recipeJpaEntity.getImageUrl(),
                 recipeJpaEntity.getCookingTime(),

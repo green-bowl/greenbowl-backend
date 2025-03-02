@@ -20,6 +20,8 @@ import static javax.persistence.CascadeType.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class RecipeJpaEntity extends BaseGeneralEntity {
+    private Long userId;
+
     @Column(nullable = false, length = 255)
     private String name;
 
@@ -53,10 +55,11 @@ public class RecipeJpaEntity extends BaseGeneralEntity {
 
     @Builder
     private RecipeJpaEntity(
-            String name, String imageUrl, short cookingTime, short calories, String oneLineIntroduction,
-            List<RecipeIngredientJpaEntity> recipeIngredientJpaEntities, String introduction,
-            EmbeddableNutrition embeddableNutrition
+            Long userId, String name, String imageUrl, short cookingTime, short calories,
+            String oneLineIntroduction, List<RecipeIngredientJpaEntity> recipeIngredientJpaEntities,
+            String introduction, EmbeddableNutrition embeddableNutrition
     ) {
+        this.userId = userId;
         this.name = name;
         this.imageUrl = imageUrl;
         this.cookingTime = cookingTime;
@@ -72,6 +75,7 @@ public class RecipeJpaEntity extends BaseGeneralEntity {
 
         if (FormatValidator.hasValue(recipeOneLineIntroduction)) {
             RecipeJpaEntity recipeJpaEntity = RecipeJpaEntity.builder()
+                    .userId(recipe.getUserId())
                     .name(recipe.getName())
                     .imageUrl(recipe.getImageUrl())
                     .cookingTime(recipe.getCookingTime())
@@ -89,6 +93,7 @@ public class RecipeJpaEntity extends BaseGeneralEntity {
         }
 
         return RecipeJpaEntity.builder()
+                .userId(recipe.getUserId())
                 .name(recipe.getName())
                 .imageUrl(recipe.getImageUrl())
                 .cookingTime(recipe.getCookingTime())
