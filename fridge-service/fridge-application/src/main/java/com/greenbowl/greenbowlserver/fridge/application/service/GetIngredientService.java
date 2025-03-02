@@ -24,7 +24,12 @@ public class GetIngredientService implements GetIngredientUseCase {
     public List<IngredientResult> getIngredients(Long userId) {
 
         List<Ingredient> ingredients = getIngredientPort.getIngredientsByUserId(userId);
-        List<CategoryItem> categoryItems = getCategoryItemPort.getCategoryItemsByUserId(userId);
+
+        List<Long> categoryIds = ingredients.stream()
+                .map(Ingredient::getCategoryId)
+                .collect(Collectors.toList());
+
+        List<CategoryItem> categoryItems = getCategoryItemPort.getCategoryItemsByIds(categoryIds);
 
         Map<Long, CategoryItem> categoryItemMap = categoryItems.stream()
                 .collect(Collectors.toMap(CategoryItem::getId, item -> item));

@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Getter
 public class CategoryItemJpaEntity extends BaseGeneralEntity {
 
-    @Column(nullable = false)
+    @Column
     private Long userId;
 
     @Convert(converter = CategoryDetail.CategoryDetailConverter.class)
@@ -31,11 +31,15 @@ public class CategoryItemJpaEntity extends BaseGeneralEntity {
     @Column(nullable = false)
     private Category category;
 
+    @Column(nullable = false)
+    private boolean isDefault;
+
     @Builder
-    public CategoryItemJpaEntity(CategoryDetail categoryDetail, Category category, Long userId) {
+    public CategoryItemJpaEntity(CategoryDetail categoryDetail, Category category, Long userId, boolean isDefault) {
         this.userId = userId;
         this.categoryDetail = categoryDetail;
         this.category = category;
+        this.isDefault = isDefault;
     }
 
     public void deleteCategoryItem(){
@@ -50,6 +54,7 @@ public class CategoryItemJpaEntity extends BaseGeneralEntity {
                 .userId(categoryItem.getUserId())
                 .category(category)
                 .categoryDetail(categoryDetail)
+                .isDefault(categoryItem.isDefault())
                 .build();
     }
 }

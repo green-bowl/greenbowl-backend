@@ -1,7 +1,6 @@
 package com.greenbowl.greenbowlserver.fridge.adapter.in.web.controller;
 
 import com.greenbowl.greenbowlserver.fridge.adapter.in.web.response.GetIngredientResponse;
-import com.greenbowl.greenbowlserver.fridge.application.port.in.DefaultIngredientResult;
 import com.greenbowl.greenbowlserver.fridge.application.port.in.IngredientResult;
 import com.greenbowl.greenbowlserver.fridge.application.port.in.usecase.GetDefaultIngredientUseCase;
 import com.greenbowl.greenbowlserver.fridge.application.port.in.usecase.GetIngredientUseCase;
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,21 +30,9 @@ public class GetIngredientController {
         String userId = "1";
 
         List<IngredientResult> ingredientResults = getIngredientUseCase.getIngredients(Long.parseLong(userId));
-        List<DefaultIngredientResult> defaultIngredientResults = getDefaultIngredientUseCase.getDefaultIngredients(Long.parseLong(userId));
-        List<GetIngredientResponse> responses = new ArrayList<>();
 
-        responses.addAll(
-                ingredientResults.stream()
-                        .map(GetIngredientResponse::from)
-                        .collect(Collectors.toList())
-        );
-
-        responses.addAll(
-                defaultIngredientResults.stream()
-                        .map(GetIngredientResponse::from)
-                        .collect(Collectors.toList())
-        );
-
+        List<GetIngredientResponse> responses = ingredientResults.stream()
+                .map(GetIngredientResponse::from).collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.OK).body(responses);
     }
 }

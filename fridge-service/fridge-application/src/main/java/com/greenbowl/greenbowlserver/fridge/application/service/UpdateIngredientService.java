@@ -21,24 +21,23 @@ public class UpdateIngredientService implements UpdateIngredientUseCase {
     private final UpdateIngredientPort updateIngredientPort;
     private final GetIngredientPort getIngredientPort;
 
-
     @Override
     public List<IngredientResult> updateIngredients(Long userId, List<UpdateIngredientCommand> updateIngredientCommands) {
-        List<Ingredient> ingredients = getIngredientPort.getIngredientsByUserId(userId);
-
         Map<Long, UpdateIngredientCommand> updateCommandMap = updateIngredientCommands.stream()
                 .collect(Collectors.toMap(UpdateIngredientCommand::getId, cmd -> cmd));
 
+        List<Ingredient> ingredients = getIngredientPort.getIngredientsByUserId(userId).stream()
+                .filter(ingredient -> updateCommandMap.containsKey(ingredient.getId()))
+                .collect(Collectors.toList());
+
         ingredients.forEach(ingredient -> {
             UpdateIngredientCommand command = updateCommandMap.get(ingredient.getId());
-            if (command != null) {
-                ingredient.update(
-                        command.getQuantity(),
-                        command.getStorageMethod(),
-                        command.getExpirationDate(),
-                        command.getCategoryId()
-                );
-            }
+            ingredient.update(
+                    command.getQuantity(),
+                    command.getStorageMethod(),
+                    command.getExpirationDate(),
+                    command.getCategoryId()
+            );
         });
         return updateIngredientPort.updateIngredients(userId, ingredients);
     }

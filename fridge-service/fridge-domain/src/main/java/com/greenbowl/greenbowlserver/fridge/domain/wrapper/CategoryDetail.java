@@ -2,6 +2,7 @@ package com.greenbowl.greenbowlserver.fridge.domain.wrapper;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+import java.util.Objects;
 
 public class CategoryDetail {
     private final String categoryDetail;
@@ -16,6 +17,19 @@ public class CategoryDetail {
 
     String getValue() {
         return categoryDetail;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CategoryDetail)) return false;
+        CategoryDetail that = (CategoryDetail) o;
+        return Objects.equals(categoryDetail, that.categoryDetail);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(categoryDetail);
     }
 
     @Converter

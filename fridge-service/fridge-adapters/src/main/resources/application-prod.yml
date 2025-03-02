@@ -29,4 +29,5 @@ spring:
       matching-strategy: ANT_PATH_MATCHER
 eureka:
   client:
-    enabled: false
+    service-url:
+      defaultZone: http://eureka:8761/eureka
