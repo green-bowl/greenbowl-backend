@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FindRecipePort {
+    boolean existsById(Long id);
+
     List<Recipe> findByUserId(Long userId);
 
     List<Recipe> findByName(String name);

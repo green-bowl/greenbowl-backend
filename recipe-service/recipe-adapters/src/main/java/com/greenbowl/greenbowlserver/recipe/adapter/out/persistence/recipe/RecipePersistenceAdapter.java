@@ -24,6 +24,11 @@ public class RecipePersistenceAdapter implements SaveRecipePort, FindRecipePort,
     }
 
     @Override
+    public boolean existsById(Long id) {
+        return recipeRepository.existsByIdAndDeleteYnFalse(id);
+    }
+
+    @Override
     public List<Recipe> findByUserId(Long userId) {
         return recipeRepository.findByUserIdAndDeleteYnFalseOrderByModifiedAtDesc(userId)
                 .stream()
