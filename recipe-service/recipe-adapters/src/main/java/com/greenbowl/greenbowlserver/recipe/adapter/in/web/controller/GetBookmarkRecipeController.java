@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 import static com.greenbowl.greenbowlserver.common.utility.ApiConstant.ID_EXAMPLE;
 import static com.greenbowl.greenbowlserver.common.utility.ApiConstant.USER_ID;
+import static com.greenbowl.greenbowlserver.recipe.adapter.in.web.utility.ApiConstant.RECIPE_ID;
 import static org.springframework.http.HttpStatus.OK;
 
 @WebAdapter
@@ -34,7 +35,6 @@ public class GetBookmarkRecipeController {
     private static final String GET_BOOKMARKED_RECIPE = "북마크에 등록된 상세 레시피 정보 조회";
     private static final String GET_BOOKMARKED_RECIPE_DESCRIPTION
             = "레시피 ID를 전송해 북마크에 등록된 상세 레시피 정보를 조회할 수 있습니다.";
-    public static final String RECIPE_ID = "레시피 ID";
 
     @ApiOperation(value = GET_USER_BOOKMARKED_RECIPES, notes = GET_USER_BOOKMARKED_RECIPES_DESCRIPTION)
     @GetMapping()

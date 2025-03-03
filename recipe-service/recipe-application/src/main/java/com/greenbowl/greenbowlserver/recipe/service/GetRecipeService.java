@@ -22,6 +22,11 @@ public class GetRecipeService implements GetRecipeUseCase {
     private final FindRecipePort findRecipePort;
 
     @Override
+    public boolean isExistent(Long id) {
+        return findRecipePort.existsById(id);
+    }
+
+    @Override
     public List<Recipe> getRecipes(Long userId) {
         return findRecipePort.findByUserId(userId);
     }
