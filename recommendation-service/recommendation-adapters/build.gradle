@@ -44,6 +44,9 @@ dependencies {
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
     implementation 'io.springfox:springfox-swagger-ui:3.0.0'
 
+    // streaming
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
     // data
     implementation 'org.postgresql:postgresql:42.2.5'
     implementation 'com.h2database:h2:2.1.214'
