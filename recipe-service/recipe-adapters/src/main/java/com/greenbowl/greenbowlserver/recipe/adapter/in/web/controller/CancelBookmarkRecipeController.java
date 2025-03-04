@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import static com.greenbowl.greenbowlserver.common.utility.ApiConstant.ID_EXAMPLE;
-import static com.greenbowl.greenbowlserver.recipe.adapter.in.web.utility.ApiConstant.RECIPE_ID;
+import static com.greenbowl.greenbowlserver.recipe.adapter.in.web.utility.ApiConstant.RECIPE_ID_VALUE;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @WebAdapter
@@ -35,7 +35,7 @@ public class CancelBookmarkRecipeController {
     @ApiOperation(value = DELETE_BOOKMARKED_BY_ID_RECIPE, notes = DELETE_BOOKMARKED_RECIPE_BY_ID_DESCRIPTION)
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> cancelRecipeById(
-            @ApiParam(value = RECIPE_ID, example = ID_EXAMPLE)
+            @ApiParam(value = RECIPE_ID_VALUE, example = ID_EXAMPLE)
             @PathVariable(value = "id") String id
     ) {
         removeRecipeUseCase.removeRecipe(FormatConverter.parseToLong(id));

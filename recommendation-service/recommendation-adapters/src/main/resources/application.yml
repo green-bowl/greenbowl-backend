@@ -29,3 +29,15 @@ spring:
       matching-strategy: ANT_PATH_MATCHER
 logging:
   config: classpath:logback-spring.xml
+frontend:
+  url: ${FRONTEND_URL}
+llm:
+  server:
+    url: ${LLM_SERVER_API_URL}
+    endpoint:
+      streaming: ${LLM_SERVER_STREAMING_ENDPOINT}
+      sse: /${LLM_SERVER_SSE_ENDPOINT}
+  recipe:
+    type: ${LLM_TYPE}
+    template: ${LLM_TEMPLATE}
+    secret-key: ${SECRET_KEY}

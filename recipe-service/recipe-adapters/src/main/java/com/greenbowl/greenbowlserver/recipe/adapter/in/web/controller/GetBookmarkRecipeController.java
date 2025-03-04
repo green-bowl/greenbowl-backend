@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 import static com.greenbowl.greenbowlserver.common.utility.ApiConstant.ID_EXAMPLE;
 import static com.greenbowl.greenbowlserver.common.utility.ApiConstant.USER_ID;
-import static com.greenbowl.greenbowlserver.recipe.adapter.in.web.utility.ApiConstant.RECIPE_ID;
+import static com.greenbowl.greenbowlserver.recipe.adapter.in.web.utility.ApiConstant.RECIPE_ID_VALUE;
 import static org.springframework.http.HttpStatus.OK;
 
 @WebAdapter
@@ -54,7 +54,7 @@ public class GetBookmarkRecipeController {
     @ApiOperation(value = GET_BOOKMARKED_RECIPE, notes = GET_BOOKMARKED_RECIPE_DESCRIPTION)
     @GetMapping("/{id}")
     public ResponseEntity<GetDetailedRecipeResponse> getRecipe(
-            @ApiParam(value = RECIPE_ID, example = ID_EXAMPLE) @PathVariable(value = "id") String id) {
+            @ApiParam(value = RECIPE_ID_VALUE, example = ID_EXAMPLE) @PathVariable(value = "id") String id) {
         Recipe recipe = getRecipeUseCase.getRecipe(FormatConverter.parseToLong(id));
 
         return ResponseEntity.status(OK).body(GetDetailedRecipeResponse.from(recipe));

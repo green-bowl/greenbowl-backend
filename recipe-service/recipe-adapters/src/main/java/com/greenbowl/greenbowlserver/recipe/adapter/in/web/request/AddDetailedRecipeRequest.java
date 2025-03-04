@@ -5,11 +5,11 @@ import lombok.Getter;
 
 import java.util.List;
 
+import static com.greenbowl.greenbowlserver.common.utility.ApiConstant.RECIPE_NAME_EXAMPLE;
+import static com.greenbowl.greenbowlserver.common.utility.ApiConstant.RECIPE_NAME_VALUE;
+
 @Getter
 public class AddDetailedRecipeRequest {
-    private static final String RECIPE_NAME_VALUE = "레시피 이름";
-    private static final String RECIPE_NAME_EXAMPLE = "된장찌개";
-
     private static final String IMAGE_URL_VALUE = "이미지 주소";
     private static final String IMAGE_URL_EXAMPLE
             = "https://ddipddipddip.s3.ap-northeast-2.amazonaws.com/images/default_food_image.jpg";
