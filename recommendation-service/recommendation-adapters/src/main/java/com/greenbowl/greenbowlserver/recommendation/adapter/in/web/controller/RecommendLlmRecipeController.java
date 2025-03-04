@@ -5,6 +5,8 @@ import com.greenbowl.greenbowlserver.recommendation.adapter.in.web.request.Recip
 import com.greenbowl.greenbowlserver.recommendation.adapter.in.web.response.ResponseGenerator;
 import com.greenbowl.greenbowlserver.recommendation.adapter.in.web.response.StreamingProcessor;
 import com.greenbowl.greenbowlserver.recommendation.port.in.usecase.RecommendLlmRecipeUseCase;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,18 +18,43 @@ import reactor.core.publisher.Flux;
 
 import java.util.List;
 
+import static com.greenbowl.greenbowlserver.common.utility.ApiConstant.RECIPE_NAME_EXAMPLE;
+import static com.greenbowl.greenbowlserver.common.utility.ApiConstant.RECIPE_NAME_VALUE;
+
 @RestController
 @RequestMapping()
 @RequiredArgsConstructor
 public class RecommendLlmRecipeController {
     private final RecommendLlmRecipeUseCase recommendLlmRecipeUseCase;
 
+    private static final String GET_RECIPE_LLM_SSE_STREAMING = "LLM을 통해 레시피 SSE 스트리밍 데이터를 추천 받는 엔드포인트";
+    private static final String GET_RECIPE_LLM_SSE_STREAMING_DESCRIPTION
+            = "LLM을 통해 레시피 SSE 스트리밍 데이터를 추천 받을 수 있습니다.";
+
+    private static final String USED_INGREDIENT_NAMES_VALUE = "사용된 재료명 목록";
+    private static final String USED_INGREDIENT_NAMES_EXAMPLE = "돼지고기, 감자, 양파";
+
+    private static final String USED_INGREDIENT_WEIGHTS_VALUE = "사용된 재료 무게 목록";
+    private static final String USED_INGREDIENT_WEIGHTS_EXAMPLE = "30g, 20g, 10g";
+
+    private static final String COOKING_TIME_VALUE = "조리 시간";
+    private static final String COOKING_TIME_EXAMPLE = "30분";
+
+    private static final String CALORIES_VALUE = "열량";
+    private static final String CALORIES_EXAMPLE = "300kcal";
+
+    @ApiOperation(value = GET_RECIPE_LLM_SSE_STREAMING, notes = GET_RECIPE_LLM_SSE_STREAMING_DESCRIPTION)
     @GetMapping(value = "/recipes/sse", produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<Flux<String>> requestRecipeLLM(
+            @ApiParam(value = RECIPE_NAME_VALUE, defaultValue = RECIPE_NAME_EXAMPLE)
             @RequestParam List<String> name,
+            @ApiParam(value = USED_INGREDIENT_NAMES_VALUE, defaultValue = USED_INGREDIENT_NAMES_EXAMPLE)
             @RequestParam List<String> usedIngredientNames,
+            @ApiParam(value = USED_INGREDIENT_WEIGHTS_VALUE, defaultValue = USED_INGREDIENT_WEIGHTS_EXAMPLE)
             @RequestParam List<String> usedIngredientWeights,
+            @ApiParam(value = COOKING_TIME_VALUE, defaultValue = COOKING_TIME_EXAMPLE)
             @RequestParam List<String> cookingTime,
+            @ApiParam(value = CALORIES_VALUE, defaultValue = CALORIES_EXAMPLE)
             @RequestParam List<String> calories
     ) {
         Flux<String> responseFlux = recommendLlmRecipeUseCase.recieveLLMRecommendedRecipe(
