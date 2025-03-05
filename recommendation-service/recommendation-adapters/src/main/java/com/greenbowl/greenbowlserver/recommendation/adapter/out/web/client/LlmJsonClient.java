@@ -21,14 +21,14 @@ public class LlmJsonClient implements ReceiveLlmJsonPort {
     private final RestTemplate restTemplate;
     private static final String LLM_SERVER_URL = "https://hyobin-llm.duckdns.org";
 
-    @Value("${llm.menus.type}")
-    private String llmType;
+    @Value("${llm.menu.type}")
+    private String menuLlmType;
 
-    @Value("${llm.menus.template}")
-    private String menusTemplate;
+    @Value("${llm.menu.template}")
+    private String menuTemplate;
 
-    @Value("${llm.menus.secret-key}")
-    private String secretKey;
+    @Value("${llm.menu.secret-key}")
+    private String menuSecretKey;
 
     @Value("${llm.server.endpoint.json}")
     private String requestEndpoint;
@@ -41,7 +41,7 @@ public class LlmJsonClient implements ReceiveLlmJsonPort {
         headers.set(CONTENT_TYPE, APPLICATION_JSON);
 
         String template = menusTemplate;
-        LlmRequest llmRequest = LlmRequest.from(llmType, template, options, secretKey);
+        LlmRequest llmRequest = LlmRequest.from(menuLlmType, menuTemplate, options, menuSecretKey);
 
         HttpEntity<LlmRequest> requestEntity = new HttpEntity<>(llmRequest, headers);
         ResponseEntity<String> responseEntity = restTemplate.exchange(
