@@ -1,7 +1,9 @@
 package com.greenbowl.greenbowlserver.recommendation.adapter.in.web.mapper;
 
+import com.greenbowl.greenbowlserver.recommendation.adapter.in.web.request.DetailedMenuOptionsRequest;
 import com.greenbowl.greenbowlserver.recommendation.adapter.in.web.request.MenuOptionsRequest;
 import com.greenbowl.greenbowlserver.recommendation.adapter.in.web.request.RecipeOptionsRequest;
+import com.greenbowl.greenbowlserver.recommendation.port.in.command.DetailedMenuOptionsCommand;
 import com.greenbowl.greenbowlserver.recommendation.port.in.command.MenuOptionsCommand;
 import com.greenbowl.greenbowlserver.recommendation.port.in.command.RecipeOptionsCommand;
 
@@ -21,6 +23,15 @@ public class RecommendationRequestToCommandMapper {
                 menuOptionsRequest.getIngredients(),
                 menuOptionsRequest.getCookingTimeLimit(),
                 menuOptionsRequest.getCuisineType()
+        );
+    }
+
+    public static DetailedMenuOptionsCommand mapToCommand(DetailedMenuOptionsRequest detailedMenuOptionsRequest) {
+        return DetailedMenuOptionsCommand.of(
+                detailedMenuOptionsRequest.getName(),
+                detailedMenuOptionsRequest.getAvailableIngredients(),
+                detailedMenuOptionsRequest.getCookingTime(),
+                detailedMenuOptionsRequest.getCalories()
         );
     }
 }
