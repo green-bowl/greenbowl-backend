@@ -45,7 +45,7 @@ llm:
     type: ${RECIPE_LLM_TYPE}
     template: ${RECIPE_LLM_TEMPLATE}
     secret-key: ${RECIPE_SECRET_KEY}
-  menus:
+  menu:
     type: ${MENUS_LLM_TYPE}
     template: ${MENUS_LLM_TEMPLATE}
     secret-key: ${MENUS_SECRET_KEY}
