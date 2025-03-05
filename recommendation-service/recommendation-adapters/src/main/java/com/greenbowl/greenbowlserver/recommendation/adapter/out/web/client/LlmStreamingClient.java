@@ -1,8 +1,8 @@
 package com.greenbowl.greenbowlserver.recommendation.adapter.out.web.client;
 
-import com.greenbowl.greenbowlserver.recommendation.adapter.out.web.LLMRequest;
-import com.greenbowl.greenbowlserver.recommendation.domain.RecipeOptions;
-import com.greenbowl.greenbowlserver.recommendation.port.out.ReceiveLLMStreamingPort;
+import com.greenbowl.greenbowlserver.recommendation.adapter.out.request.LlmRequest;
+import com.greenbowl.greenbowlserver.recommendation.port.out.ReceiveLlmStreamingPort;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.MediaType;
@@ -11,13 +11,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
 @Component
-public class LLMStreamingClient implements ReceiveLLMStreamingPort {
+@RequiredArgsConstructor
+public class LlmStreamingClient implements ReceiveLlmStreamingPort {
     private final WebClient webClient;
-    private static final String LLM_SERVER_URL = "https://hyobin-llm.duckdns.org";
-
-    public LLMStreamingClient() {
-        webClient = WebClient.create(LLM_SERVER_URL);
-    }
 
     @Value("${llm.recipe.type}")
     private String llmType;
@@ -32,13 +28,13 @@ public class LLMStreamingClient implements ReceiveLLMStreamingPort {
     private String sseRequestEndpoint;
 
     @Override
-    public Flux<String> receiveLLMStreamingSSE(RecipeOptions recipeOptions) {
-        LLMRequest llmRequest = LLMRequest.from(llmType, template, recipeOptions, secretKey);
+    public Flux<String> receiveLlmStreamingSSE(Object options) {
+        LlmRequest llmRequest = LlmRequest.from(llmType, template, options, secretKey);
 
         return webClientRequest(sseRequestEndpoint, llmRequest);
     }
 
-    private Flux<String> webClientRequest(String requestEndpoint, LLMRequest llmRequest) {
+    private Flux<String> webClientRequest(String requestEndpoint, LlmRequest llmRequest) {
         return webClient.post()
                 .uri(requestEndpoint)
                 .contentType(MediaType.APPLICATION_JSON)

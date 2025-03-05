@@ -7,13 +7,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-    @Value("${frontend.url}")
-    private String frontendUrl;
+    @Value("${frontend.vercel.url}")
+    private String frontendVercelUrl;
+
+    @Value("${frontend.swyg.url}")
+    private String frontendSwygUrl;
 
     @Override
     public void addCorsMappings(CorsRegistry corsRegistry) {
         corsRegistry.addMapping("/**")
-                .allowedOriginPatterns(frontendUrl)
+                .allowedOriginPatterns(frontendVercelUrl, frontendSwygUrl)
                 .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(false);

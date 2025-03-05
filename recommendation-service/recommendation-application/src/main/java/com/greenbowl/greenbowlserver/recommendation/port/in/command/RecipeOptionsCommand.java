@@ -30,6 +30,12 @@ public class RecipeOptionsCommand {
             List<String> name, List<String> usedIngredientNames, List<String> usedIngredientWeights,
             List<String> cookingTime, List<String> calories
     ) {
-        return new RecipeOptionsCommand(name, usedIngredientNames, usedIngredientWeights, cookingTime, calories);
+        return RecipeOptionsCommand.builder()
+                .name(name)
+                .usedIngredientNames(usedIngredientNames)
+                .usedIngredientWeights(usedIngredientWeights)
+                .cookingTime(cookingTime)
+                .calories(calories)
+                .build();
     }
 }
