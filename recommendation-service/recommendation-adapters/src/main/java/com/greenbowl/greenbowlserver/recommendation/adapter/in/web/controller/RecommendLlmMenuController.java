@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static com.greenbowl.greenbowlserver.common.utility.ApiConstant.*;
 import static org.springframework.http.HttpStatus.OK;
 
 @WebAdapter
@@ -37,6 +38,10 @@ public class RecommendLlmMenuController {
     private static final String CUISINE_TYPE_VALUE = "요리 유형";
     private static final String CUISINE_TYPE_EXAMPLE = "한식";
 
+    private static final String GET_DETAILED_MENU_LLM_JSON = "LLM을 통해 상세 메뉴 정보 JSON 데이터를 추천 받는 엔드포인트";
+    private static final String GET_DETAILED_MENU_LLM_JSON_DESCRIPTION
+            = "LLM을 통해 상세 메뉴 정보 데이터를 JSON 형식으로 추천 받을 수 있습니다.";
+
     @ApiOperation(value = GET_MENU_LLM_JSON, notes = GET_MENU_LLM_JSON_DESCRIPTION)
     @GetMapping()
     public ResponseEntity<String> requestMenuLLM(
@@ -56,11 +61,16 @@ public class RecommendLlmMenuController {
         return ResponseEntity.status(OK).body(jsonResponse);
     }
 
+    @ApiOperation(value = GET_DETAILED_MENU_LLM_JSON, notes = GET_DETAILED_MENU_LLM_JSON_DESCRIPTION)
     @GetMapping("/detailed")
     public ResponseEntity<String> requestDetailedMenuLLM(
+            @ApiParam(value = RECIPE_NAME_VALUE, defaultValue = RECIPE_NAME_EXAMPLE)
             @RequestParam List<String> name,
+            @ApiParam(value = AVAILABLE_INGREDIENTS_VALUE, defaultValue = AVAILABLE_INGREDIENTS_EXAMPLE)
             @RequestParam List<String> availableIngredients,
+            @ApiParam(value = COOKING_TIME_VALUE, defaultValue = COOKING_TIME_EXAMPLE)
             @RequestParam List<String> cookingTime,
+            @ApiParam(value = CALORIES_VALUE, defaultValue = CALORIES_EXAMPLE)
             @RequestParam List<String> calories
     ) {
         String jsonResponse = recommendLlmMenuUseCase.receiveLLMRecommendedMenu(
