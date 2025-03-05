@@ -49,3 +49,7 @@ llm:
     type: ${MENUS_LLM_TYPE}
     template: ${MENUS_LLM_TEMPLATE}
     secret-key: ${MENUS_SECRET_KEY}
+  detailed-menu:
+    type: ${DETAILED_MENU_LLM_TYPE}
+    template: ${DETAILED_MENU_LLM_TEMPLATE}
+    secret-key: ${DETAILED_MENU_SECRET_KEY}

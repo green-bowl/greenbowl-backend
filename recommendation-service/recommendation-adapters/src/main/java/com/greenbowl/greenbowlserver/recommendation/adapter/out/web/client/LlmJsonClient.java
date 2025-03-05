@@ -30,6 +30,15 @@ public class LlmJsonClient implements ReceiveLlmJsonPort {
     @Value("${llm.menu.secret-key}")
     private String menuSecretKey;
 
+    @Value("${llm.detailed-menu.type}")
+    private String detailedMenuLlmType;
+
+    @Value("${llm.detailed-menu.template}")
+    private String detailedMenuTemplate;
+
+    @Value("${llm.detailed-menu.secret-key}")
+    private String detailedMenuSecretKey;
+
     @Value("${llm.server.endpoint.json}")
     private String requestEndpoint;
 
@@ -40,8 +49,11 @@ public class LlmJsonClient implements ReceiveLlmJsonPort {
         HttpHeaders headers = new HttpHeaders();
         headers.set(CONTENT_TYPE, APPLICATION_JSON);
 
-        String template = menusTemplate;
-        LlmRequest llmRequest = LlmRequest.from(menuLlmType, menuTemplate, options, menuSecretKey);
+        String llmType = chooseLlmType(isDetailed);
+        String template = chooseTemplate(isDetailed);
+        String secretKey = chooseSecretKey(isDetailed);
+
+        LlmRequest llmRequest = LlmRequest.from(llmType, template, options, secretKey);
 
         HttpEntity<LlmRequest> requestEntity = new HttpEntity<>(llmRequest, headers);
         ResponseEntity<String> responseEntity = restTemplate.exchange(
@@ -52,5 +64,29 @@ public class LlmJsonClient implements ReceiveLlmJsonPort {
         );
 
         return responseEntity.getBody();
+    }
+
+    private String chooseLlmType(boolean isDetailed) {
+        if (isDetailed) {
+            return detailedMenuLlmType;
+        }
+
+        return menuLlmType;
+    }
+
+    private String chooseTemplate(boolean isDetailed) {
+        if (isDetailed) {
+            return detailedMenuTemplate;
+        }
+
+        return menuTemplate;
+    }
+
+    private String chooseSecretKey(boolean isDetailed) {
+        if (isDetailed) {
+            return detailedMenuSecretKey;
+        }
+
+        return menuSecretKey;
     }
 }

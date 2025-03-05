@@ -52,7 +52,7 @@ public class RecommendLlmRecipeController {
             @ApiParam(value = CALORIES_VALUE, defaultValue = CALORIES_EXAMPLE)
             @RequestParam List<String> calories
     ) {
-        Flux<String> responseFlux = recommendLlmRecipeUseCase.recieveLLMRecommendedRecipe(
+        Flux<String> responseFlux = recommendLlmRecipeUseCase.recieveLlmRecommendedRecipe(
                 RecommendationRequestToCommandMapper.mapToCommand(
                         RecipeOptionsRequest.of(name, usedIngredientNames, usedIngredientWeights, cookingTime, calories)
                 )

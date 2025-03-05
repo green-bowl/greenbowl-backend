@@ -2,6 +2,7 @@ package com.greenbowl.greenbowlserver.recommendation.adapter.in.web.controller;
 
 import com.greenbowl.greenbowlserver.common.adapter.in.WebAdapter;
 import com.greenbowl.greenbowlserver.recommendation.adapter.in.web.mapper.RecommendationRequestToCommandMapper;
+import com.greenbowl.greenbowlserver.recommendation.adapter.in.web.request.DetailedMenuOptionsRequest;
 import com.greenbowl.greenbowlserver.recommendation.adapter.in.web.request.MenuOptionsRequest;
 import com.greenbowl.greenbowlserver.recommendation.port.in.usecase.RecommendLlmMenuUseCase;
 import io.swagger.annotations.ApiOperation;
@@ -49,6 +50,22 @@ public class RecommendLlmMenuController {
         String jsonResponse = recommendLlmMenuUseCase.receiveLLMRecommendedMenu(
                 RecommendationRequestToCommandMapper.mapToCommand(
                         MenuOptionsRequest.of(ingredients, cookingTimeLimit, cuisineType)
+                )
+        );
+
+        return ResponseEntity.status(OK).body(jsonResponse);
+    }
+
+    @GetMapping("/detailed")
+    public ResponseEntity<String> requestDetailedMenuLLM(
+            @RequestParam List<String> name,
+            @RequestParam List<String> availableIngredients,
+            @RequestParam List<String> cookingTime,
+            @RequestParam List<String> calories
+    ) {
+        String jsonResponse = recommendLlmMenuUseCase.receiveLLMRecommendedMenu(
+                RecommendationRequestToCommandMapper.mapToCommand(
+                        DetailedMenuOptionsRequest.of(name, availableIngredients, cookingTime, calories)
                 )
         );
 
