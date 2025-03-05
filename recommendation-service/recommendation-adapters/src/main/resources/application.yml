@@ -7,9 +7,9 @@ spring:
     allow-bean-definition-overriding: true
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/greenbowl
-    username: postgresuser
-    password: postgrepassword
+    url: ${GREENBOWL_POSTGRES_URL}
+    username: ${GREENBOWL_POSTGRES_USERNAME}
+    password: ${GREENBOWL_POSTGRES_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: create
@@ -30,7 +30,11 @@ spring:
 logging:
   config: classpath:logback-spring.xml
 frontend:
-  url: ${FRONTEND_URL}
+  url: ${GREENBOWL_FRONTEND_URL}
+  vercel:
+    url: ${GREENBOWL_FRONTEND_VERCEL_URL}
+  swyg:
+    url: ${GREENBOWL_FRONTEND_SWYG_URL}
 llm:
   server:
     url: ${LLM_SERVER_API_URL}
@@ -38,6 +42,10 @@ llm:
       streaming: ${LLM_SERVER_STREAMING_ENDPOINT}
       sse: /${LLM_SERVER_SSE_ENDPOINT}
   recipe:
-    type: ${LLM_TYPE}
-    template: ${LLM_TEMPLATE}
-    secret-key: ${SECRET_KEY}
+    type: ${RECIPE_LLM_TYPE}
+    template: ${RECIPE_LLM_TEMPLATE}
+    secret-key: ${RECIPE_SECRET_KEY}
+  menus:
+    type: ${MENUS_LLM_TYPE}
+    template: ${MENUS_LLM_TEMPLATE}
+    secret-key: ${MENUS_SECRET_KEY}

@@ -1,5 +1,6 @@
 package com.greenbowl.greenbowlserver.recommendation.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 
 import java.util.List;
@@ -12,6 +13,7 @@ public class RecipeOptions {
     private List<String> cookingTime;
     private List<String> calories;
 
+    @Builder
     private RecipeOptions(
             List<String> name, List<String> usedIngredientNames, List<String> usedIngredientWeights,
             List<String> cookingTime, List<String> calories
@@ -27,6 +29,12 @@ public class RecipeOptions {
             List<String> name, List<String> usedIngredientNames, List<String> usedIngredientWeights,
             List<String> cookingTime, List<String> calories
     ) {
-        return new RecipeOptions(name, usedIngredientNames, usedIngredientWeights, cookingTime, calories);
+        return RecipeOptions.builder()
+                .name(name)
+                .usedIngredientNames(usedIngredientNames)
+                .usedIngredientWeights(usedIngredientWeights)
+                .cookingTime(cookingTime)
+                .calories(calories)
+                .build();
     }
 }

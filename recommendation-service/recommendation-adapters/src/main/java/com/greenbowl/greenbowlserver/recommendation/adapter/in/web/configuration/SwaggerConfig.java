@@ -1,4 +1,4 @@
-package com.greenbowl.greenbowlserver.recommendation.configuration;
+package com.greenbowl.greenbowlserver.recommendation.adapter.in.web.configuration;
 
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.CorsEndpointProperties;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties;

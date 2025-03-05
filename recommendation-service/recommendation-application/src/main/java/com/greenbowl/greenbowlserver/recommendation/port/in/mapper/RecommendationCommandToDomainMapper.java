@@ -1,6 +1,8 @@
 package com.greenbowl.greenbowlserver.recommendation.port.in.mapper;
 
+import com.greenbowl.greenbowlserver.recommendation.domain.MenuOptions;
 import com.greenbowl.greenbowlserver.recommendation.domain.RecipeOptions;
+import com.greenbowl.greenbowlserver.recommendation.port.in.command.MenuOptionsCommand;
 import com.greenbowl.greenbowlserver.recommendation.port.in.command.RecipeOptionsCommand;
 
 public class RecommendationCommandToDomainMapper {
@@ -11,6 +13,14 @@ public class RecommendationCommandToDomainMapper {
                 recipeOptionsCommand.getUsedIngredientWeights(),
                 recipeOptionsCommand.getCookingTime(),
                 recipeOptionsCommand.getCalories()
+        );
+    }
+
+    public static MenuOptions mapToDomainEntity(MenuOptionsCommand menuOptionsCommand) {
+        return MenuOptions.of(
+                menuOptionsCommand.getIngredients(),
+                menuOptionsCommand.getCookingTimeLimit(),
+                menuOptionsCommand.getCookingTimeLimit()
         );
     }
 }

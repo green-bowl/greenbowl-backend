@@ -1,5 +1,6 @@
 package com.greenbowl.greenbowlserver.recommendation.adapter.in.web.controller;
 
+import com.greenbowl.greenbowlserver.common.adapter.in.WebAdapter;
 import com.greenbowl.greenbowlserver.recommendation.adapter.in.web.mapper.RecommendationRequestToCommandMapper;
 import com.greenbowl.greenbowlserver.recommendation.adapter.in.web.request.RecipeOptionsRequest;
 import com.greenbowl.greenbowlserver.recommendation.adapter.in.web.response.ResponseGenerator;
@@ -18,9 +19,9 @@ import reactor.core.publisher.Flux;
 
 import java.util.List;
 
-import static com.greenbowl.greenbowlserver.common.utility.ApiConstant.RECIPE_NAME_EXAMPLE;
-import static com.greenbowl.greenbowlserver.common.utility.ApiConstant.RECIPE_NAME_VALUE;
+import static com.greenbowl.greenbowlserver.common.utility.ApiConstant.*;
 
+@WebAdapter
 @RestController
 @RequestMapping()
 @RequiredArgsConstructor
@@ -36,12 +37,6 @@ public class RecommendLlmRecipeController {
 
     private static final String USED_INGREDIENT_WEIGHTS_VALUE = "사용된 재료 무게 목록";
     private static final String USED_INGREDIENT_WEIGHTS_EXAMPLE = "30g, 20g, 10g";
-
-    private static final String COOKING_TIME_VALUE = "조리 시간";
-    private static final String COOKING_TIME_EXAMPLE = "30분";
-
-    private static final String CALORIES_VALUE = "열량";
-    private static final String CALORIES_EXAMPLE = "300kcal";
 
     @ApiOperation(value = GET_RECIPE_LLM_SSE_STREAMING, notes = GET_RECIPE_LLM_SSE_STREAMING_DESCRIPTION)
     @GetMapping(value = "/recipes/sse", produces = MediaType.TEXT_PLAIN_VALUE)

@@ -1,5 +1,6 @@
 package com.greenbowl.greenbowlserver.recommendation.adapter.in.web.request;
 
+import lombok.Builder;
 import lombok.Getter;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public class RecipeOptionsRequest {
     private List<String> cookingTime;
     private List<String> calories;
 
-
+    @Builder
     private RecipeOptionsRequest(
             List<String> name, List<String> usedIngredientNames, List<String> usedIngredientWeights,
             List<String> cookingTime, List<String> calories
@@ -28,6 +29,12 @@ public class RecipeOptionsRequest {
             List<String> name, List<String> usedIngredientNames, List<String> usedIngredientWeights,
             List<String> cookingTime, List<String> calories
     ) {
-        return new RecipeOptionsRequest(name, usedIngredientNames, usedIngredientWeights, cookingTime, calories);
+        return RecipeOptionsRequest.builder()
+                .name(name)
+                .usedIngredientNames(usedIngredientNames)
+                .usedIngredientWeights(usedIngredientWeights)
+                .cookingTime(cookingTime)
+                .calories(calories)
+                .build();
     }
 }

@@ -5,5 +5,5 @@ import com.greenbowl.greenbowlserver.recommendation.port.in.command.RecipeOption
 import reactor.core.publisher.Flux;
 
 public interface RecommendLlmRecipeUseCase {
-    Flux<String> recieveLLMRecommendedRecipe(RecipeOptionsCommand recipeOptionsCommand);
+    Flux<String> recieveLlmRecommendedRecipe(RecipeOptionsCommand recipeOptionsCommand);
 }
