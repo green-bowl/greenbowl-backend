@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fridge-adapters
+  namespace: greenbowl
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fridge-adapters
+  template:
+    metadata:
+      labels:
+        app: fridge-adapters
+    spec:
+      containers:
+        - name: fridge-adapters
+          image: hellmir/greenbowl-fridge-adapters:1.0.0
+          ports:
+            - containerPort: 8081
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://postgres.greenbowl.svc.cluster.local:5432/greenbowl"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "postgresuser"
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
