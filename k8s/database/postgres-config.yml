@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+  namespace: greenbowl
+data:
+  POSTGRES_DB: "greenbowl"
+  POSTGRES_USER: "postgresuser"
+  TZ: "Asia/Seoul"
