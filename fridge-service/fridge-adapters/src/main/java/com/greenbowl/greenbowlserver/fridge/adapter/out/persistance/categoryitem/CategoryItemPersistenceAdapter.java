@@ -2,15 +2,16 @@ package com.greenbowl.greenbowlserver.fridge.adapter.out.persistance.categoryite
 
 import com.greenbowl.greenbowlserver.common.adapter.out.PersistenceAdapter;
 import com.greenbowl.greenbowlserver.fridge.adapter.out.mapper.FridgeJpaEntityToDomainMapper;
+import com.greenbowl.greenbowlserver.fridge.application.exception.NotFoundCategoryItemException;
 import com.greenbowl.greenbowlserver.fridge.application.port.in.command.DeleteCategoryItemCommand;
 import com.greenbowl.greenbowlserver.fridge.application.port.out.CreateCategoryItemPort;
 import com.greenbowl.greenbowlserver.fridge.application.port.out.DeleteCategoryItemPort;
 import com.greenbowl.greenbowlserver.fridge.application.port.out.GetCategoryItemPort;
 import com.greenbowl.greenbowlserver.fridge.domain.CategoryItem;
+import com.greenbowl.greenbowlserver.fridge.domain.exception.DuplicateCategoryException;
 import com.greenbowl.greenbowlserver.fridge.domain.wrapper.Category;
 import lombok.RequiredArgsConstructor;
 
-import javax.persistence.EntityExistsException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,7 +30,7 @@ public class CategoryItemPersistenceAdapter implements
                 categoryItem.getCategoryDetail(),
                 categoryItem.getCategory()
         )){
-            throw new EntityExistsException("이미 존재하는 카테고리 입니다.");
+            throw new DuplicateCategoryException("이미 존재하는 카테고리 입니다.");
         }
         categoryItemJpaRepository.save(categoryItemJpaEntity);
 
@@ -75,7 +76,7 @@ public class CategoryItemPersistenceAdapter implements
     public void deleteCategoryItem(Long userId, DeleteCategoryItemCommand deleteCategoryItemCommand) {
         CategoryItemJpaEntity categoryItemJpaEntity
                 = categoryItemJpaRepository.findByUserIdAndIdAndDeleteYnFalse(userId, deleteCategoryItemCommand.getId())
-                .orElseThrow(()-> new IllegalArgumentException("존재하지 않는 항목입니다."));
+                .orElseThrow(()-> new NotFoundCategoryItemException("존재하지 않는 항목입니다."));
 
         if (categoryItemJpaEntity.isDefault()){
             throw new IllegalArgumentException("기본 항목은 삭제할 수 없습니다.");
