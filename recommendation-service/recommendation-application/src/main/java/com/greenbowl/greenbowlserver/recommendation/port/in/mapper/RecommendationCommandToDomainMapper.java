@@ -22,7 +22,7 @@ public class RecommendationCommandToDomainMapper {
         return MenuOptions.of(
                 menuOptionsCommand.getIngredients(),
                 menuOptionsCommand.getCookingTimeLimit(),
-                menuOptionsCommand.getCookingTimeLimit()
+                menuOptionsCommand.getCuisineType()
         );
     }
 
