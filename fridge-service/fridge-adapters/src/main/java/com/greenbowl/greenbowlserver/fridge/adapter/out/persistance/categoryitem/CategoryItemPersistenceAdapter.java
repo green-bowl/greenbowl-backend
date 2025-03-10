@@ -1,5 +1,6 @@
 package com.greenbowl.greenbowlserver.fridge.adapter.out.persistance.categoryitem;
 
+import com.greenbowl.greenbowlserver.common.adapter.out.PersistenceAdapter;
 import com.greenbowl.greenbowlserver.fridge.adapter.out.mapper.FridgeJpaEntityToDomainMapper;
 import com.greenbowl.greenbowlserver.fridge.application.port.in.command.DeleteCategoryItemCommand;
 import com.greenbowl.greenbowlserver.fridge.application.port.out.CreateCategoryItemPort;
@@ -8,14 +9,13 @@ import com.greenbowl.greenbowlserver.fridge.application.port.out.GetCategoryItem
 import com.greenbowl.greenbowlserver.fridge.domain.CategoryItem;
 import com.greenbowl.greenbowlserver.fridge.domain.wrapper.Category;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityExistsException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
+@PersistenceAdapter
 @RequiredArgsConstructor
 public class CategoryItemPersistenceAdapter implements
         CreateCategoryItemPort, DeleteCategoryItemPort, GetCategoryItemPort {

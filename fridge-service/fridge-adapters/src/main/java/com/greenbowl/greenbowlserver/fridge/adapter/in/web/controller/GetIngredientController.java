@@ -1,5 +1,6 @@
 package com.greenbowl.greenbowlserver.fridge.adapter.in.web.controller;
 
+import com.greenbowl.greenbowlserver.common.adapter.in.WebAdapter;
 import com.greenbowl.greenbowlserver.fridge.adapter.in.web.response.GetIngredientResponse;
 import com.greenbowl.greenbowlserver.fridge.application.port.in.IngredientResult;
 import com.greenbowl.greenbowlserver.fridge.application.port.in.usecase.GetDefaultIngredientUseCase;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@WebAdapter
 @RestController
 @RequiredArgsConstructor
 public class GetIngredientController {
