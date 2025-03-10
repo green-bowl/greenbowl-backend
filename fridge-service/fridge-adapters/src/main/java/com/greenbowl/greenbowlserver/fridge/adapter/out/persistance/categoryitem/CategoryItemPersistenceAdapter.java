@@ -60,7 +60,7 @@ public class CategoryItemPersistenceAdapter implements
         List<CategoryItemJpaEntity> result = new ArrayList<>();
 
         List<CategoryItemJpaEntity> defaultCategoryItem = categoryItemJpaRepository
-                .findAllByUserIdNullAndDeleteYnFalseAndIsDefaultTrue();
+                .findAllByUserIdNullAndDeleteYnFalseAndIsDefaultTrueAndCategory(category);
 
         List<CategoryItemJpaEntity> categoryItemJpaEntities
                 = categoryItemJpaRepository.findAllByUserIdAndCategoryAndDeleteYnFalse(userId, category);

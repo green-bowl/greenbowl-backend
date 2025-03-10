@@ -16,6 +16,8 @@ public interface CategoryItemJpaRepository extends JpaRepository<CategoryItemJpa
 
     List<CategoryItemJpaEntity> findAllByUserIdAndIdIn(Long userId, List<Long> categoryIds);
 
+    List<CategoryItemJpaEntity> findAllByUserIdNullAndDeleteYnFalseAndIsDefaultTrueAndCategory(Category category);
+
     List<CategoryItemJpaEntity> findAllByUserIdNullAndDeleteYnFalseAndIsDefaultTrue();
 
     List<CategoryItemJpaEntity> findByIdInAndDeleteYnFalse(List<Long> categoryIds);
