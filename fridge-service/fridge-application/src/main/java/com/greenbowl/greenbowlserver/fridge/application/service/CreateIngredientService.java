@@ -1,18 +1,18 @@
 package com.greenbowl.greenbowlserver.fridge.application.service;
 
+import com.greenbowl.greenbowlserver.common.application.UseCase;
 import com.greenbowl.greenbowlserver.fridge.application.port.in.command.CreateIngredientCommand;
 import com.greenbowl.greenbowlserver.fridge.application.port.in.mapper.IngredientCommandToDomainMapper;
 import com.greenbowl.greenbowlserver.fridge.application.port.in.usecase.CreateIngredientUseCase;
 import com.greenbowl.greenbowlserver.fridge.application.port.out.CreateIngredientPort;
 import com.greenbowl.greenbowlserver.fridge.domain.Ingredient;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
+@UseCase
 @RequiredArgsConstructor
 @Transactional
 public class CreateIngredientService implements CreateIngredientUseCase {

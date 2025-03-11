@@ -1,5 +1,6 @@
 package com.greenbowl.greenbowlserver.fridge.adapter.in.web.controller;
 
+import com.greenbowl.greenbowlserver.common.adapter.in.WebAdapter;
 import com.greenbowl.greenbowlserver.fridge.adapter.in.web.response.GetCategoryItemBySequenceResponse;
 import com.greenbowl.greenbowlserver.fridge.adapter.in.web.response.GetCategoryItemResponse;
 import com.greenbowl.greenbowlserver.fridge.application.port.in.usecase.GetCategoryItemUseCase;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@WebAdapter
 @RestController
 @RequiredArgsConstructor
 public class GetCategoryItemController {
@@ -39,6 +41,7 @@ public class GetCategoryItemController {
         List<CategoryItem> categoryItems = getCategoryItemUseCase
                 .getCategoryItemBySequence(Long.parseLong(userId), Integer.parseInt(sequence));
 
+//        Default Category Disabled
 //        List<DefaultCategoryItem> defaultCategoryItems = getDefaultCategoryItemUseCase
 //                .getDefaultCategoryItemBySequence(Integer.parseInt(sequence));
 
@@ -50,6 +53,7 @@ public class GetCategoryItemController {
                         .collect(Collectors.toList())
         );
 
+//        Default Category Disabled
 //        responses.addAll(
 //                defaultCategoryItems.stream()
 //                        .map(GetCategoryItemBySequenceResponse::from)
