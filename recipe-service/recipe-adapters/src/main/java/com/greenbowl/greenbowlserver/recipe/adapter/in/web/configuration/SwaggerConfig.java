@@ -1,4 +1,4 @@
-package com.greenbowl.greenbowlserver.user.configuration;
+package com.greenbowl.greenbowlserver.recipe.adapter.in.web.configuration;
 
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.CorsEndpointProperties;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties;
@@ -36,15 +36,15 @@ SwaggerConfig {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("greenbowl.user")
+                .groupName("greenbowl.recipe")
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.greenbowl.greenbowlserver.user"))
+                .apis(RequestHandlerSelectors.basePackage("com.greenbowl.greenbowlserver.recipe"))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo())
                 .securityContexts(Arrays.asList(securityContext()))
                 .securitySchemes(Arrays.asList(apiKey()))
-                .pathMapping("/api/users");
+                .pathMapping("/api/recipes");
     }
 
     private SecurityContext securityContext() {
@@ -65,8 +65,8 @@ SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("그린볼 AI 회원 서버 API")
-                .description("스마트 헬스 푸드 케어 서비스 그린볼의 회원 서버 API입니다.")
+                .title("그린볼 AI 레시피 서버 API")
+                .description("스마트 헬스 푸드 케어 서비스 그린볼의 AI 레시피 서버 API입니다.")
                 .version("1.0")
                 .build();
     }
