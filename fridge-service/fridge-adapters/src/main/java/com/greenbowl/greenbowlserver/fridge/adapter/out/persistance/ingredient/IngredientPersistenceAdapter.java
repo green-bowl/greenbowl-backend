@@ -1,5 +1,6 @@
 package com.greenbowl.greenbowlserver.fridge.adapter.out.persistance.ingredient;
 
+import com.greenbowl.greenbowlserver.common.adapter.out.PersistenceAdapter;
 import com.greenbowl.greenbowlserver.fridge.adapter.out.mapper.FridgeJpaEntityToDomainMapper;
 import com.greenbowl.greenbowlserver.fridge.adapter.out.persistance.categoryitem.CategoryItemJpaEntity;
 import com.greenbowl.greenbowlserver.fridge.adapter.out.persistance.categoryitem.CategoryItemJpaRepository;
@@ -12,7 +13,6 @@ import com.greenbowl.greenbowlserver.fridge.application.port.out.UpdateIngredien
 import com.greenbowl.greenbowlserver.fridge.domain.CategoryItem;
 import com.greenbowl.greenbowlserver.fridge.domain.Ingredient;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@Component
+@PersistenceAdapter
 @RequiredArgsConstructor
 public class IngredientPersistenceAdapter implements
         CreateIngredientPort, DeleteIngredientPort, GetIngredientPort, UpdateIngredientPort {

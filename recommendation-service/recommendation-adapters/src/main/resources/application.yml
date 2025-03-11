@@ -7,15 +7,9 @@ spring:
     allow-bean-definition-overriding: true
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/greenbowl
-    username: postgresuser
-    password: postgrepassword
-    hikari:
-      minimum-idle: 5
-      maximum-pool-size: 10
-      idle-timeout: 600000
-      max-lifetime: 1800000
-      connection-timeout: 30000
+    url: ${GREENBOWL_POSTGRES_URL}
+    username: ${GREENBOWL_POSTGRES_USERNAME}
+    password: ${GREENBOWL_POSTGRES_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: create
