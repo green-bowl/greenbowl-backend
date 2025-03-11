@@ -34,6 +34,8 @@ spring:
 #          uri: lb://USER-ADAPTERS
 #          predicates:
 #            - Path=
+  jwt:
+    secret: ${GREENBOWL_JWT_SECRET_KEY}
 eureka:
   client:
     enabled: false

@@ -27,8 +27,6 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
-  jwt:
-    secret: ${GREENBOWL_JWT_SECRET_KEY}
 eureka:
   client:
     enabled: false
