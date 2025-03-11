@@ -1,6 +1,5 @@
 package com.greenbowl.greenbowlserver.fridge.adapter.in.web.controller;
 
-import com.greenbowl.greenbowlserver.common.adapter.in.WebAdapter;
 import com.greenbowl.greenbowlserver.fridge.adapter.in.web.mapper.FridgeRequestToCommandMapper;
 import com.greenbowl.greenbowlserver.fridge.adapter.in.web.request.UpdateIngredientRequest;
 import com.greenbowl.greenbowlserver.fridge.adapter.in.web.response.UpdateIngredientResponse;
@@ -20,7 +19,6 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@WebAdapter
 @RestController
 @RequiredArgsConstructor
 public class UpdateIngredientController {

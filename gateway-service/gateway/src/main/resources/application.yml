@@ -13,29 +13,10 @@ spring:
   cloud:
     gateway:
       routes:
-#        - id: recommendation-adapters
-#          uri: lb://RECOMMENDATION-ADAPTERS
-#          predicates:
-#            - Path=
-
         - id: fridge-adapters
           uri: lb://FRIDGE-ADAPTERS
           predicates:
             - Path=/category-items/**,/ingredients/**
-          filters:
-            - name: AuthorizationHeaderFilter
-
-#        - id: recipe-adapters
-#          uri: lb://RECIPE-ADAPTERS
-#          predicates:
-#            - Path=
-
-#        - id: user-adapters
-#          uri: lb://USER-ADAPTERS
-#          predicates:
-#            - Path=
-  jwt:
-    secret: ${GREENBOWL_JWT_SECRET_KEY}
 eureka:
   client:
     enabled: false

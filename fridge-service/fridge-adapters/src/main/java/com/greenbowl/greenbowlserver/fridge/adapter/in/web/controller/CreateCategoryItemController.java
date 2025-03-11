@@ -1,6 +1,5 @@
 package com.greenbowl.greenbowlserver.fridge.adapter.in.web.controller;
 
-import com.greenbowl.greenbowlserver.common.adapter.in.WebAdapter;
 import com.greenbowl.greenbowlserver.fridge.adapter.in.web.mapper.FridgeRequestToCommandMapper;
 import com.greenbowl.greenbowlserver.fridge.adapter.in.web.request.CreateCategoryItemRequest;
 import com.greenbowl.greenbowlserver.fridge.adapter.in.web.response.CreateCategoryItemResponse;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
-@WebAdapter
 @RestController
 @RequiredArgsConstructor
 public class CreateCategoryItemController {
