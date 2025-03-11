@@ -1,6 +1,5 @@
 package com.greenbowl.greenbowlserver.fridge.application.service;
 
-import com.greenbowl.greenbowlserver.common.application.UseCase;
 import com.greenbowl.greenbowlserver.fridge.application.port.in.IngredientResult;
 import com.greenbowl.greenbowlserver.fridge.application.port.in.usecase.GetIngredientUseCase;
 import com.greenbowl.greenbowlserver.fridge.application.port.out.GetCategoryItemPort;
@@ -9,12 +8,13 @@ import com.greenbowl.greenbowlserver.fridge.domain.CategoryItem;
 import com.greenbowl.greenbowlserver.fridge.domain.Ingredient;
 import com.greenbowl.greenbowlserver.fridge.domain.wrapper.WrapperAccessor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@UseCase
+@Service
 @RequiredArgsConstructor
 public class GetIngredientService implements GetIngredientUseCase {
     private final GetIngredientPort getIngredientPort;
