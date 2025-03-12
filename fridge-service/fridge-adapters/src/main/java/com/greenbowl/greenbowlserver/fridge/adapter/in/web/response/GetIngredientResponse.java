@@ -19,7 +19,6 @@ public class GetIngredientResponse {
     private Long categoryId;
     private int sequence;
     private String categoryDetail;
-    private boolean isDefault;
 
     public static GetIngredientResponse from(IngredientResult ingredientResult) {
         return GetIngredientResponse.builder()
@@ -30,7 +29,6 @@ public class GetIngredientResponse {
                 .categoryId(ingredientResult.getCategoryId())
                 .sequence(ingredientResult.getSequence())
                 .categoryDetail(ingredientResult.getCategoryDetail())
-                .isDefault(false)
                 .build();
     }
 
@@ -43,7 +41,6 @@ public class GetIngredientResponse {
                 .categoryId(defaultIngredientResult.getCategoryId())
                 .sequence(defaultIngredientResult.getSequence())
                 .categoryDetail(defaultIngredientResult.getCategoryDetail())
-                .isDefault(true)
                 .build();
     }
 }
