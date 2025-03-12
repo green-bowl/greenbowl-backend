@@ -35,11 +35,6 @@ public class RemoveRecipeService implements RemoveRecipeUseCase {
     public void removeRecipe(String name) {
         List<Recipe> recipes = getRecipeUseCase.getRecipes(name);
 
-        if (recipes.size() == 1) {
-            deleteRecipePort.deleteById(recipes.get(0).getId());
-            return;
-        }
-
-        deleteRecipePort.deleteByName(name);
+        deleteRecipePort.deleteById(recipes.get(0).getId());
     }
 }

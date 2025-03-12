@@ -9,7 +9,7 @@ public interface RecipeRepository extends JpaRepository<RecipeJpaEntity, Long> {
 
     boolean existsByIdAndDeleteYnFalse(Long id);
 
-    List<RecipeJpaEntity> findByNameAndDeleteYnFalse(String name);
+    List<RecipeJpaEntity> findByNameAndDeleteYnFalseOrderByModifiedAtDesc(String name);
 
     RecipeJpaEntity findByIdAndDeleteYnFalse(Long id);
 }

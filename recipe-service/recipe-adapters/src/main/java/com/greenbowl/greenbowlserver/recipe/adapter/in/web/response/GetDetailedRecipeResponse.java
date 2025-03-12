@@ -1,5 +1,6 @@
 package com.greenbowl.greenbowlserver.recipe.adapter.in.web.response;
 
+import com.greenbowl.greenbowlserver.common.utility.FormatValidator;
 import com.greenbowl.greenbowlserver.recipe.domain.Recipe;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,6 +16,7 @@ public class GetDetailedRecipeResponse {
     private String imageUrl;
     private short cookingTime;
     private short calories;
+    private boolean isDetailed;
     private String oneLineIntroduction;
     private List<RecipeIngredientResponse> recipeIngredients;
     private String introduction;
@@ -25,7 +27,7 @@ public class GetDetailedRecipeResponse {
 
     @Builder
     private GetDetailedRecipeResponse(
-            Long id, String name, String imageUrl, short cookingTime, short calories,
+            Long id, String name, String imageUrl, short cookingTime, short calories, boolean isDetailed,
             String oneLineIntroduction, List<RecipeIngredientResponse> recipeIngredients,
             String introduction, NutritionResponse nutrition, LocalDateTime createdAt, LocalDateTime modifiedAt
     ) {
@@ -34,6 +36,7 @@ public class GetDetailedRecipeResponse {
         this.imageUrl = imageUrl;
         this.cookingTime = cookingTime;
         this.calories = calories;
+        this.isDetailed = isDetailed;
         this.oneLineIntroduction = oneLineIntroduction;
         this.recipeIngredients = recipeIngredients;
         this.introduction = introduction;
@@ -43,13 +46,16 @@ public class GetDetailedRecipeResponse {
     }
 
     public static GetDetailedRecipeResponse from(Recipe recipe) {
+        String oneLineIntroduction = recipe.getOneLineIntroduction();
+
         return GetDetailedRecipeResponse.builder()
                 .id(recipe.getId())
                 .name(recipe.getName())
                 .imageUrl(recipe.getImageUrl())
                 .cookingTime(recipe.getCookingTime())
                 .calories(recipe.getCalories())
-                .oneLineIntroduction(recipe.getOneLineIntroduction())
+                .isDetailed(FormatValidator.hasValue(oneLineIntroduction))
+                .oneLineIntroduction(oneLineIntroduction)
                 .recipeIngredients(
                         recipe.getRecipeIngredients()
                                 .stream()

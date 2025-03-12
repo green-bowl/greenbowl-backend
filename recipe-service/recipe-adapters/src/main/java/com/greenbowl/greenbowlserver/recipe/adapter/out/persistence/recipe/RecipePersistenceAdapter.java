@@ -38,7 +38,7 @@ public class RecipePersistenceAdapter implements SaveRecipePort, FindRecipePort,
 
     @Override
     public List<Recipe> findByName(String name) {
-        return recipeRepository.findByNameAndDeleteYnFalse(name)
+        return recipeRepository.findByNameAndDeleteYnFalseOrderByModifiedAtDesc(name)
                 .stream()
                 .map(RecipeJpaEntityToDomainMapper::mapToDomainEntity)
                 .collect(Collectors.toList());
@@ -57,7 +57,7 @@ public class RecipePersistenceAdapter implements SaveRecipePort, FindRecipePort,
 
     @Override
     public void deleteByName(String name) {
-        List<RecipeJpaEntity> recipeJpaEntities = recipeRepository.findByNameAndDeleteYnFalse(name);
+        List<RecipeJpaEntity> recipeJpaEntities = recipeRepository.findByNameAndDeleteYnFalseOrderByModifiedAtDesc(name);
         recipeJpaEntities.forEach(RecipeJpaEntity::delete);
     }
 }
