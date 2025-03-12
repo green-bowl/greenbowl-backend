@@ -31,12 +31,12 @@ public class DeleteIngredientController {
 
     @ApiOperation(value = DELETE_INGREDIENT, notes = DELETE_INGREDIENT_DESCRIPTION)
     @DeleteMapping("/ingredients")
-    public ResponseEntity<Void> deleteIngredient(
+    public ResponseEntity<String> deleteIngredient(
             @RequestBody @Valid @ApiParam(value = DELETE_INGREDIENT_FORM) List<DeleteIngredientRequest> deleteIngredientRequest) {
         List<DeleteIngredientCommand> deleteIngredientCommands = deleteIngredientRequest.stream()
                         .map(FridgeRequestToCommandMapper::mapToCommand).collect(Collectors.toList());
 
         deleteIngredientUseCase.deleteIngredient(deleteIngredientCommands);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body("ok");
     }
 }

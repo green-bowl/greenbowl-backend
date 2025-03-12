@@ -13,12 +13,14 @@ public class GetCategoryItemBySequenceResponse {
     private Long id;
     private String categoryDetail;
     private int sequence;
+    private boolean isDefault;
 
     public static GetCategoryItemBySequenceResponse from (CategoryItem categoryItem) {
         return GetCategoryItemBySequenceResponse.builder()
                 .sequence(categoryItem.getCategory().getSequence())
                 .id(categoryItem.getId())
                 .categoryDetail(WrapperAccessor.getCategoryDetail(categoryItem.getCategoryDetail()))
+                .isDefault(categoryItem.isDefault())
                 .build();
     }
 }
