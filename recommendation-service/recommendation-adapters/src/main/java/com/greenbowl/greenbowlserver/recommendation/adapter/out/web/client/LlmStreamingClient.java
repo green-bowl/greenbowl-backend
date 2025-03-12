@@ -3,17 +3,21 @@ package com.greenbowl.greenbowlserver.recommendation.adapter.out.web.client;
 import com.greenbowl.greenbowlserver.recommendation.adapter.out.request.LlmRequest;
 import com.greenbowl.greenbowlserver.recommendation.port.out.ReceiveLlmStreamingPort;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
+import reactor.netty.http.client.PrematureCloseException;
 
 @Component
 @RequiredArgsConstructor
 public class LlmStreamingClient implements ReceiveLlmStreamingPort {
     private final WebClient webClient;
+    private static final Logger log = LoggerFactory.getLogger(LlmStreamingClient.class);
 
     @Value("${llm.recipe.type}")
     private String llmType;
@@ -46,6 +50,18 @@ public class LlmStreamingClient implements ReceiveLlmStreamingPort {
                     byte[] bytes = new byte[dataBuffer.readableByteCount()];
                     dataBuffer.read(bytes);
                     return new String(bytes);
+                })
+                .onErrorResume(PrematureCloseException.class, e -> {
+                    log.error("SSE Connection Closed. Reconnecting...", e);
+
+                    return Flux.defer(() -> {
+                        try {
+                            Thread.sleep(5000);
+                        } catch (InterruptedException ignored) {
+                        }
+
+                        return webClientRequest(requestEndpoint, llmRequest);
+                    });
                 });
     }
 }
