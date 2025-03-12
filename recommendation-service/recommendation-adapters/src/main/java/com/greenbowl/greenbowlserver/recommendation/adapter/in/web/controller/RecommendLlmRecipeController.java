@@ -23,7 +23,6 @@ import static com.greenbowl.greenbowlserver.common.utility.ApiConstant.*;
 
 @WebAdapter
 @RestController
-@RequestMapping()
 @RequiredArgsConstructor
 public class RecommendLlmRecipeController {
     private final RecommendLlmRecipeUseCase recommendLlmRecipeUseCase;
