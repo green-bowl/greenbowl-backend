@@ -14,7 +14,7 @@ INSERT INTO category_item (category, category_detail, created_at, modified_at, u
                                                                                                         (1, '감자', now(), now(), NULL, TRUE),
                                                                                                         (1, '고구마', now(), now(), NULL, TRUE),
                                                                                                         (1, '고추', now(), now(), NULL, TRUE),
-                                                                                                        (1, '꺳잎', now(), now(), NULL, TRUE),
+                                                                                                        (1, '깻잎', now(), now(), NULL, TRUE),
                                                                                                         (1, '나물', now(), now(), NULL, TRUE),
                                                                                                         (1, '당근', now(), now(), NULL, TRUE),
                                                                                                         (1, '더덕', now(), now(), NULL, TRUE),
