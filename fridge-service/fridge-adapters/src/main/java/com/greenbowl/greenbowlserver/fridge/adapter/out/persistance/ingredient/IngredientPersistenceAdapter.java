@@ -84,7 +84,7 @@ public class IngredientPersistenceAdapter implements
                             .orElseThrow(() -> new IllegalArgumentException("재료를 찾을 수 없음: " + ingredient.getId()));
 
                     CategoryItemJpaEntity categoryItemJpaEntity = categoryItemJpaRepository
-                            .findByIdAndDeleteYnFalse(ingredient.getId())
+                            .findByIdAndDeleteYnFalse(ingredient.getCategoryId())
                             .orElseThrow(()-> new IllegalArgumentException("카테고리를 찾을 수 없음" + ingredient.getCategoryId()));
 
                     existingEntity.update(ingredient, categoryItemJpaEntity);
