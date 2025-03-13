@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -31,8 +32,11 @@ public class CreateCategoryItemController {
     @ApiOperation(value = CREATE_CATEGORY_ITEM, notes = CREATE_CATEGORY_ITEM_DESCRIPTION)
     @PostMapping("/category-items")
     public ResponseEntity<CreateCategoryItemResponse> createCategoryItem(
-            @RequestBody @ApiParam(value = CREATE_CATEGORY_ITEM_FORM) @Valid CreateCategoryItemRequest createCategoryItemRequest) {
-        String userId = "1";
+            @RequestBody
+            @ApiParam(value = CREATE_CATEGORY_ITEM_FORM)
+            @Valid CreateCategoryItemRequest createCategoryItemRequest,
+            @RequestHeader(value = "userId", defaultValue = "1") String userId
+    ) {
         CreateCategoryItemCommand command = FridgeRequestToCommandMapper.mapToCommand(createCategoryItemRequest);
 
         CategoryItem result = createCategoryItemUseCase.createCategoryItem(Long.parseLong(userId), command);

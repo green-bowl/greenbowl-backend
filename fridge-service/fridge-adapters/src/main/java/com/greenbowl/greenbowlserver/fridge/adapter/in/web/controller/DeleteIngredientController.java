@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -32,7 +33,11 @@ public class DeleteIngredientController {
     @ApiOperation(value = DELETE_INGREDIENT, notes = DELETE_INGREDIENT_DESCRIPTION)
     @DeleteMapping("/ingredients")
     public ResponseEntity<String> deleteIngredient(
-            @RequestBody @Valid @ApiParam(value = DELETE_INGREDIENT_FORM) List<DeleteIngredientRequest> deleteIngredientRequest) {
+            @RequestBody
+            @Valid
+            @ApiParam(value = DELETE_INGREDIENT_FORM) List<DeleteIngredientRequest> deleteIngredientRequest,
+            @RequestHeader(value = "userId", defaultValue = "1") String userId
+    ) {
         List<DeleteIngredientCommand> deleteIngredientCommands = deleteIngredientRequest.stream()
                         .map(FridgeRequestToCommandMapper::mapToCommand).collect(Collectors.toList());
 
