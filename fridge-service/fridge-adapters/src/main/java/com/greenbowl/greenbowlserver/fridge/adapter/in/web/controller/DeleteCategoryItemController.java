@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -30,8 +31,11 @@ public class DeleteCategoryItemController {
     @ApiOperation(value = DELETE_CATEGORY_ITEM, notes = DELETE_CATEGORY_ITEM_DESCRIPTION)
     @DeleteMapping("/category-items")
     public ResponseEntity<Void> deleteCategoryItem(
-            @RequestBody @Valid @ApiParam(value = DELETE_CATEGORY_ITEM_FORM) DeleteCategoryItemRequest deleteCategoryItemRequest) {
-        String userId = "1";
+            @RequestBody
+            @Valid
+            @ApiParam(value = DELETE_CATEGORY_ITEM_FORM) DeleteCategoryItemRequest deleteCategoryItemRequest,
+            @RequestHeader(value = "userId", defaultValue = "1") String userId
+    ) {
 
         DeleteCategoryItemCommand deleteCategoryItemCommand
                 = FridgeRequestToCommandMapper.mapToCommand(deleteCategoryItemRequest);

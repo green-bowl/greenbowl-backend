@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -28,8 +29,9 @@ public class GetIngredientController {
 
     @ApiOperation(value = GET_INGREDIENT, notes = GET_CATEGORY_ITEM_DESCRIPTION)
     @GetMapping("/ingredients")
-    public ResponseEntity<List<GetIngredientResponse>> getIngredient() {
-        String userId = "1";
+    public ResponseEntity<List<GetIngredientResponse>> getIngredient(
+            @RequestHeader(value = "userId", defaultValue = "1") String userId
+    ) {
 
         List<IngredientResult> ingredientResults = getIngredientUseCase.getIngredients(Long.parseLong(userId));
 

@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -34,8 +35,11 @@ public class CreateIngredientController {
     @ApiOperation(value = CREATE_INGREDIENT, notes = CREATE_INGREDIENT_DESCRIPTION)
     @PostMapping("/ingredients")
     public ResponseEntity<List<CreateIngredientResponse>> createIngredient(
-            @RequestBody @Valid @ApiParam(value = CREATE_INGREDIENT_FORM) List<CreateIngredientRequest> createIngredientRequest) {
-        String userId = "1";
+            @RequestBody
+            @Valid
+            @ApiParam(value = CREATE_INGREDIENT_FORM) List<CreateIngredientRequest> createIngredientRequest,
+            @RequestHeader(value = "userId", defaultValue = "1") String userId
+    ) {
         List<CreateIngredientCommand> command = createIngredientRequest.stream()
                 .map(FridgeRequestToCommandMapper::mapToCommand).collect(Collectors.toList());
 

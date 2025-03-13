@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,8 +36,9 @@ public class GetCategoryItemController {
 
     @ApiOperation(value = GET_CATEGORY_ITEM_BY_SEQUENCE, notes = GET_CATEGORY_ITEM_BY_SEQUENCE_DESCRIPTION)
     @GetMapping("/category-items")
-    public ResponseEntity<List<GetCategoryItemBySequenceResponse>> getCategoryItemsBySequence(@RequestParam("sequence") String sequence){
-        String userId = "1";
+    public ResponseEntity<List<GetCategoryItemBySequenceResponse>> getCategoryItemsBySequence(
+            @RequestParam("sequence") String sequence,
+            @RequestHeader(value = "userId", defaultValue = "1") String userId){
 
         List<CategoryItem> categoryItems = getCategoryItemUseCase
                 .getCategoryItemBySequence(Long.parseLong(userId), Integer.parseInt(sequence));
@@ -65,8 +67,9 @@ public class GetCategoryItemController {
 
     @ApiOperation(value = GET_CATEGORY_ITEM, notes = GET_CATEGORY_ITEM_DESCRIPTION)
     @GetMapping("/category-items/all")
-    public ResponseEntity<List<GetCategoryItemResponse>> getAllCategoryItems() {
-        String userId = "1";
+    public ResponseEntity<List<GetCategoryItemResponse>> getAllCategoryItems(
+            @RequestHeader(value = "userId", required = false, defaultValue = "1") String userId
+    ) {
 
         List<CategoryItem> responses = getCategoryItemUseCase.getCategoryItems(Long.parseLong(userId));
         List<GetCategoryItemResponse> result = responses.stream()
