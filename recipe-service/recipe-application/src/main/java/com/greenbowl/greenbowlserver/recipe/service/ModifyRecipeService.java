@@ -12,6 +12,7 @@ import com.greenbowl.greenbowlserver.recipe.port.out.UpdateRecipePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.greenbowl.greenbowlserver.common.domain.exception.ExceptionMessage.INCONSISTENT_USER_EXCEPTION_MESSAGE;
@@ -34,7 +35,7 @@ public class ModifyRecipeService implements ModifyRecipeUseCase {
         Long storedUserId = recipe.getUserId();
         Long receivedUserId = modifyRecipeCommand.getUserId();
 
-        if (storedUserId.equals(receivedUserId)) {
+        if (Objects.equals(storedUserId, receivedUserId)) {
             recipe.update(
                     modifyRecipeCommand.getOneLineIntroduction(),
                     modifyRecipeCommand.getIngredients()
