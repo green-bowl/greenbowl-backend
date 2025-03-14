@@ -4,7 +4,7 @@ import com.greenbowl.greenbowlserver.recipe.port.in.command.CreateDetailedRecipe
 import com.greenbowl.greenbowlserver.recipe.port.in.command.CreateRecipeCommand;
 
 public interface CreateRecipeUseCase {
-    void createRecipe(CreateRecipeCommand createRecipeCommand);
+    Long createRecipe(CreateRecipeCommand createRecipeCommand);
 
     void createRecipe(CreateDetailedRecipeCommand createDetailedRecipeCommand);
 }

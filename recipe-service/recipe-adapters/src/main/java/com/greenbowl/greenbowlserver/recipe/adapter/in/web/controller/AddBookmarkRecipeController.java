@@ -36,17 +36,15 @@ public class AddBookmarkRecipeController {
 
     @ApiOperation(value = ADD_RECIPE_TO_BOOKMARK, notes = ADD_RECIPE_TO_BOOKMARK_DESCRIPTION)
     @PostMapping()
-    public ResponseEntity<Void> addRecipe(
+    public ResponseEntity<Long> addRecipe(
             @ApiParam(value = ADD_RECIPE_REQUEST_FORM)
             @RequestBody AddRecipeRequest addRecipeRequest,
             @ApiParam(value = USER_ID, example = ID_EXAMPLE)
             @RequestHeader(value = "userId", required = false, defaultValue = "1") String userId
     ) {
-        createRecipeUseCase.createRecipe(RecipeRequestToCommandMapper.mapToCommand(userId, addRecipeRequest));
+        Long id = createRecipeUseCase.createRecipe(RecipeRequestToCommandMapper.mapToCommand(userId, addRecipeRequest));
 
-        return ResponseEntity.status(CREATED).
-
-                build();
+        return ResponseEntity.status(CREATED).body(id);
     }
 
     @ApiOperation(value = ADD_DETAILED_RECIPE_TO_BOOKMARK, notes = ADD_DETAILED_RECIPE_TO_BOOKMARK_DESCRIPTION)
