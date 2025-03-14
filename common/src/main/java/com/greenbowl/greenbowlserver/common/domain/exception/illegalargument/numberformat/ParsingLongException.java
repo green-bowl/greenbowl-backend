@@ -1,4 +1,4 @@
-package com.greenbowl.greenbowlserver.common.domain.excpeption.illegalargument.numberformat;
+package com.greenbowl.greenbowlserver.common.domain.exception.illegalargument.numberformat;
 
 public class ParsingLongException extends NumberFormatException {
     public ParsingLongException(String message) {

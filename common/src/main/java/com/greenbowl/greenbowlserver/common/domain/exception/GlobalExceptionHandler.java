@@ -1,4 +1,4 @@
-package com.greenbowl.greenbowlserver.common.domain.excpeption;
+package com.greenbowl.greenbowlserver.common.domain.exception;
 
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
