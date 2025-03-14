@@ -117,8 +117,8 @@ public class RecipeJpaEntity extends BaseGeneralEntity {
 
         List<RecipeIngredientJpaEntity> recipeIngredientJpaEntities
                 = generateIngredientEntities(recipe.getRecipeIngredients(), this);
-        this.recipeIngredients.clear();
         this.recipeIngredients = recipeIngredientJpaEntities;
+
         this.introduction = recipe.getIntroduction();
         this.nutrition = EmbeddableNutrition.from(recipe.getNutrition());
     }

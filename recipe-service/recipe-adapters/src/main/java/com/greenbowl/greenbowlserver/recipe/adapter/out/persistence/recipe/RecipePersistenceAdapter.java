@@ -18,10 +18,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class RecipePersistenceAdapter implements SaveRecipePort, FindRecipePort, UpdateRecipePort, DeleteRecipePort {
     private final RecipeRepository recipeRepository;
+    private final RecipeIngredientRepository recipeIngredientRepository;
 
     @Override
-    public void saveRecipe(Recipe recipe) {
-        recipeRepository.save(RecipeJpaEntity.from(recipe));
+    public Long saveRecipe(Recipe recipe) {
+        return recipeRepository.save(RecipeJpaEntity.from(recipe)).getId();
     }
 
     @Override
@@ -53,6 +54,7 @@ public class RecipePersistenceAdapter implements SaveRecipePort, FindRecipePort,
     @Override
     public void updateRecipe(Recipe recipe) {
         RecipeJpaEntity recipeJpaEntity = recipeRepository.findByIdAndDeleteYnFalse(recipe.getId());
+        recipeIngredientRepository.deleteAll(recipeJpaEntity.getRecipeIngredients());
         recipeJpaEntity.update(recipe);
     }
 
