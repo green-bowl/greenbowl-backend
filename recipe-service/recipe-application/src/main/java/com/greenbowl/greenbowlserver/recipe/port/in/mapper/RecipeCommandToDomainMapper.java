@@ -39,7 +39,7 @@ public class RecipeCommandToDomainMapper {
         );
     }
 
-    private static Nutrition mapToDomain(NutritionCommand nutritionCommand) {
+    public static Nutrition mapToDomain(NutritionCommand nutritionCommand) {
         return Nutrition.of(
                 nutritionCommand.getCarbohydrate(),
                 nutritionCommand.getProtein(),

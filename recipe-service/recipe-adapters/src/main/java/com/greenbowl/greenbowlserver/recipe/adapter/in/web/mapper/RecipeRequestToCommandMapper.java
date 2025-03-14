@@ -3,11 +3,9 @@ package com.greenbowl.greenbowlserver.recipe.adapter.in.web.mapper;
 import com.greenbowl.greenbowlserver.common.utility.FormatConverter;
 import com.greenbowl.greenbowlserver.recipe.adapter.in.web.request.AddDetailedRecipeRequest;
 import com.greenbowl.greenbowlserver.recipe.adapter.in.web.request.AddRecipeRequest;
+import com.greenbowl.greenbowlserver.recipe.adapter.in.web.request.ModifyRecipeRequest;
 import com.greenbowl.greenbowlserver.recipe.adapter.in.web.request.NutritionRequest;
-import com.greenbowl.greenbowlserver.recipe.port.in.command.CreateDetailedRecipeCommand;
-import com.greenbowl.greenbowlserver.recipe.port.in.command.CreateRecipeCommand;
-import com.greenbowl.greenbowlserver.recipe.port.in.command.IngredientCommand;
-import com.greenbowl.greenbowlserver.recipe.port.in.command.NutritionCommand;
+import com.greenbowl.greenbowlserver.recipe.port.in.command.*;
 
 import java.util.stream.Collectors;
 
@@ -40,6 +38,24 @@ public class RecipeRequestToCommandMapper {
                         )
                         .collect(Collectors.toList()),
                 mapToCommand(addDetailedRecipeRequest.getNutrition())
+        );
+    }
+
+    public static ModifyRecipeCommand mapToCommand(String userId, ModifyRecipeRequest modifyRecipeRequest) {
+        return ModifyRecipeCommand.of(
+                FormatConverter.parseToLong(userId),
+                FormatConverter.parseToLong(modifyRecipeRequest.getId()),
+                modifyRecipeRequest.getOneLineIntroduction(),
+                modifyRecipeRequest.getIntroduction(),
+                modifyRecipeRequest.getIngredients()
+                        .stream()
+                        .map(
+                                ingredient -> IngredientCommand.of(
+                                        ingredient.getName(), FormatConverter.parseToShort(ingredient.getWeight())
+                                )
+                        )
+                        .collect(Collectors.toList()),
+                mapToCommand(modifyRecipeRequest.getNutrition())
         );
     }
 

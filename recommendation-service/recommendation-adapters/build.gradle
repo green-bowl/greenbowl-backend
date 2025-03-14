@@ -47,6 +47,9 @@ dependencies {
     // streaming
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
+    // eureka client
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:3.1.8'
+
     // data
     implementation 'org.postgresql:postgresql:42.2.5'
     implementation 'com.h2database:h2:2.1.214'

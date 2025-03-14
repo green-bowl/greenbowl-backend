@@ -115,4 +115,14 @@ public class RecipeJpaEntity extends BaseGeneralEntity {
     public void delete() {
         deleteEntity();
     }
+
+    public void update(Recipe recipe) {
+        this.oneLineIntroduction = recipe.getOneLineIntroduction();
+
+        List<RecipeIngredientJpaEntity> recipeIngredientJpaEntities
+                = generateIngredientEntities(recipe.getRecipeIngredients(), this);
+        this.recipeIngredients = recipeIngredientJpaEntities;
+        this.introduction = recipe.getIntroduction();
+        this.nutrition = EmbeddableNutrition.from(recipe.getNutrition());
+    }
 }
