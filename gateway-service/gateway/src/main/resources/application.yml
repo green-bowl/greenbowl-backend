@@ -13,27 +13,36 @@ spring:
   cloud:
     gateway:
       routes:
-#        - id: recommendation-adapters
-#          uri: lb://RECOMMENDATION-ADAPTERS
-#          predicates:
-#            - Path=
+        - id: recommendation-adapters
+          uri: lb://RECOMMENDATION-ADAPTERS
+          predicates:
+            - Path=/api/recommendations/**
+          filters:
+            - name: AuthorizationHeaderFilter
+            - RewritePath=/api/recommendations/(?<segment>.*), /${segment}
 
         - id: fridge-adapters
           uri: lb://FRIDGE-ADAPTERS
           predicates:
-            - Path=/category-items/**,/ingredients/**
+            - Path=/api/fridges/**
           filters:
             - name: AuthorizationHeaderFilter
+            - RewritePath=/api/fridges/(?<segment>.*), /${segment}
 
-#        - id: recipe-adapters
-#          uri: lb://RECIPE-ADAPTERS
-#          predicates:
-#            - Path=
+        - id: recipe-adapters
+          uri: lb://RECIPE-ADAPTERS
+          predicates:
+            - Path=/api/recipes/**
+          filters:
+            - name: AuthorizationHeaderFilter
+            - RewritePath=/api/recipes/(?<segment>.*), /${segment}
 
-#        - id: user-adapters
-#          uri: lb://USER-ADAPTERS
-#          predicates:
-#            - Path=
+        - id: user-adapters
+          uri: lb://USER-ADAPTERS
+          predicates:
+            - Path=/api/users/**
+          filters:
+            - RewritePath=/api/users/(?<segment>.*), /${segment}
   jwt:
     secret: ${GREENBOWL_JWT_SECRET_KEY}
 eureka:
