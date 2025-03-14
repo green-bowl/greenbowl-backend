@@ -21,8 +21,8 @@ public class CreateRecipeService implements CreateRecipeUseCase {
     private final SaveRecipePort saveRecipePort;
 
     @Override
-    public void createRecipe(CreateRecipeCommand createRecipeCommand) {
-        saveRecipePort.saveRecipe(RecipeCommandToDomainMapper.mapToDomainEntity(createRecipeCommand));
+    public Long createRecipe(CreateRecipeCommand createRecipeCommand) {
+        return saveRecipePort.saveRecipe(RecipeCommandToDomainMapper.mapToDomainEntity(createRecipeCommand));
     }
 
     @Override
