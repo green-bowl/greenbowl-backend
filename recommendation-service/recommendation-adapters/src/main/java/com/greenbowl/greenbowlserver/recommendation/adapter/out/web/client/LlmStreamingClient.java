@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -47,21 +48,21 @@ public class LlmStreamingClient implements ReceiveLlmStreamingPort {
                 .retrieve()
                 .bodyToFlux(DataBuffer.class)
                 .map(dataBuffer -> {
-                    byte[] bytes = new byte[dataBuffer.readableByteCount()];
-                    dataBuffer.read(bytes);
-                    return new String(bytes);
+                    try {
+                        byte[] bytes = new byte[dataBuffer.readableByteCount()];
+                        dataBuffer.read(bytes);
+                        return new String(bytes);
+                    } finally {
+                        DataBufferUtils.release(dataBuffer);
+                    }
                 })
-                .onErrorResume(PrematureCloseException.class, e -> {
-                    log.error("SSE Connection Closed. Reconnecting...", e);
-
-                    return Flux.defer(() -> {
-                        try {
-                            Thread.sleep(5000);
-                        } catch (InterruptedException ignored) {
-                        }
-
-                        return webClientRequest(requestEndpoint, llmRequest);
-                    });
+                .doOnError(PrematureCloseException.class, e -> log.error("Ignoring PrematureCloseException and continuing SSE..."))
+                .onErrorContinue((throwable, obj) -> {
+                    if (throwable instanceof PrematureCloseException) {
+                        log.warn("PrematureCloseException ignored, continuing SSE stream...");
+                    } else {
+                        log.error("Unexpected error in SSE stream", throwable);
+                    }
                 });
     }
 }
