@@ -6,6 +6,7 @@ import com.greenbowl.greenbowlserver.recipe.domain.Recipe;
 import com.greenbowl.greenbowlserver.recipe.port.out.DeleteRecipePort;
 import com.greenbowl.greenbowlserver.recipe.port.out.FindRecipePort;
 import com.greenbowl.greenbowlserver.recipe.port.out.SaveRecipePort;
+import com.greenbowl.greenbowlserver.recipe.port.out.UpdateRecipePort;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
-public class RecipePersistenceAdapter implements SaveRecipePort, FindRecipePort, DeleteRecipePort {
+public class RecipePersistenceAdapter implements SaveRecipePort, FindRecipePort, UpdateRecipePort, DeleteRecipePort {
     private final RecipeRepository recipeRepository;
 
     @Override
@@ -47,6 +48,12 @@ public class RecipePersistenceAdapter implements SaveRecipePort, FindRecipePort,
     @Override
     public Optional<Recipe> findById(Long id) {
         return RecipeJpaEntityToDomainMapper.mapToOptionalDomainEntity(recipeRepository.findByIdAndDeleteYnFalse(id));
+    }
+
+    @Override
+    public void updateRecipe(Recipe recipe) {
+        RecipeJpaEntity recipeJpaEntity = recipeRepository.findByIdAndDeleteYnFalse(recipe.getId());
+        recipeJpaEntity.update(recipe);
     }
 
     @Override

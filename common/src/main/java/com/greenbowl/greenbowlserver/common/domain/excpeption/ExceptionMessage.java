@@ -26,4 +26,7 @@ public class ExceptionMessage {
 
     public static final String ID_NO_VALUE_EXCEPTION_MESSAGE = "ID는 필수값입니다.";
     public static final String INVALID_ID_EXCEPTION_MESSAGE = "ID는 양의 정수(1 이상의 숫자값)여야 합니다. 전송된 ID: %s";
+
+    public static final String INCONSISTENT_USER_EXCEPTION_MESSAGE
+            = "다른 사용자의 레시피입니다. 저장된 사요자 ID: %d, 전송된 사용자 ID: %d";
 }

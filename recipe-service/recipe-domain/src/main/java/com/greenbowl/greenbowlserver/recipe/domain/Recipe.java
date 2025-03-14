@@ -88,4 +88,14 @@ public class Recipe {
                 .modifiedAt(modifiedAt)
                 .build();
     }
+
+    public void update(
+            String oneLineIntroduction, List<RecipeIngredient> recipeIngredients,
+            String introduction, Nutrition nutrition
+    ) {
+        this.oneLineIntroduction = oneLineIntroduction;
+        this.recipeIngredients = recipeIngredients;
+        this.introduction = introduction;
+        this.nutrition = nutrition;
+    }
 }
