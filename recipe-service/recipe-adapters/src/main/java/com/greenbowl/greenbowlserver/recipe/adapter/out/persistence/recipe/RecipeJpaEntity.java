@@ -37,7 +37,7 @@ public class RecipeJpaEntity extends BaseGeneralEntity {
     @Column(length = 511)
     private String oneLineIntroduction;
 
-    @OneToMany(mappedBy = "recipe", orphanRemoval = true, cascade = {PERSIST, MERGE, REMOVE})
+    @OneToMany(mappedBy = "recipe", cascade = {PERSIST, MERGE, REMOVE})
     private List<RecipeIngredientJpaEntity> recipeIngredients;
 
     @Column(length = 65_535)
@@ -112,17 +112,18 @@ public class RecipeJpaEntity extends BaseGeneralEntity {
                 .collect(Collectors.toList());
     }
 
-    public void delete() {
-        deleteEntity();
-    }
-
     public void update(Recipe recipe) {
         this.oneLineIntroduction = recipe.getOneLineIntroduction();
 
         List<RecipeIngredientJpaEntity> recipeIngredientJpaEntities
                 = generateIngredientEntities(recipe.getRecipeIngredients(), this);
+        this.recipeIngredients.clear();
         this.recipeIngredients = recipeIngredientJpaEntities;
         this.introduction = recipe.getIntroduction();
         this.nutrition = EmbeddableNutrition.from(recipe.getNutrition());
+    }
+
+    public void delete() {
+        deleteEntity();
     }
 }

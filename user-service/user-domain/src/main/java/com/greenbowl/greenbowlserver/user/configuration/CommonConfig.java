@@ -1,7 +1,7 @@
 package com.greenbowl.greenbowlserver.user.configuration;
 
 import com.greenbowl.greenbowlserver.common.application.aop.LoggingAspect;
-import com.greenbowl.greenbowlserver.common.domain.excpeption.GlobalExceptionHandler;
+import com.greenbowl.greenbowlserver.common.domain.exception.GlobalExceptionHandler;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 

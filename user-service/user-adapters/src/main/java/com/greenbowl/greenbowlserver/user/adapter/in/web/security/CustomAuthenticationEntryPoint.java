@@ -1,7 +1,7 @@
 package com.greenbowl.greenbowlserver.user.adapter.in.web.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.greenbowl.greenbowlserver.common.domain.excpeption.ErrorResponse;
+import com.greenbowl.greenbowlserver.common.domain.exception.ErrorResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.AuthenticationException;

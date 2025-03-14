@@ -1,4 +1,4 @@
-package com.greenbowl.greenbowlserver.common.domain.excpeption;
+package com.greenbowl.greenbowlserver.common.domain.exception;
 
 public class ExceptionMessage {
     public static final String PARSING_LONG_EXCEPTION_MESSAGE

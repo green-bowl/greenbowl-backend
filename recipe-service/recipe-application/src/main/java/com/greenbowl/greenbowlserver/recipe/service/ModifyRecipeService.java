@@ -1,7 +1,7 @@
 package com.greenbowl.greenbowlserver.recipe.service;
 
 import com.greenbowl.greenbowlserver.common.application.UseCase;
-import com.greenbowl.greenbowlserver.common.domain.excpeption.accessdenied.InconsistentUserException;
+import com.greenbowl.greenbowlserver.common.domain.exception.accessdenied.InconsistentUserException;
 import com.greenbowl.greenbowlserver.recipe.domain.Recipe;
 import com.greenbowl.greenbowlserver.recipe.domain.RecipeIngredient;
 import com.greenbowl.greenbowlserver.recipe.port.in.command.ModifyRecipeCommand;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.stream.Collectors;
 
-import static com.greenbowl.greenbowlserver.common.domain.excpeption.ExceptionMessage.INCONSISTENT_USER_EXCEPTION_MESSAGE;
+import static com.greenbowl.greenbowlserver.common.domain.exception.ExceptionMessage.INCONSISTENT_USER_EXCEPTION_MESSAGE;
 import static org.springframework.transaction.annotation.Isolation.READ_UNCOMMITTED;
 
 @RequiredArgsConstructor

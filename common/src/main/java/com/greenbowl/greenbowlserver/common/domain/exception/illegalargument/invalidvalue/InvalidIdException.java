@@ -1,4 +1,4 @@
-package com.greenbowl.greenbowlserver.common.domain.excpeption.illegalargument.invalidvalue;
+package com.greenbowl.greenbowlserver.common.domain.exception.illegalargument.invalidvalue;
 
 public class InvalidIdException extends InvalidValueException {
     public InvalidIdException(String message) {
