@@ -17,6 +17,7 @@ public class FridgeJpaEntityToDomainMapper {
                 .userId(categoryItemJpaEntity.getUserId())
                 .category(categoryItemJpaEntity.getCategory())
                 .categoryDetail(categoryItemJpaEntity.getCategoryDetail())
+                .isDefault(categoryItemJpaEntity.isDefault())
                 .build();
     }
 
